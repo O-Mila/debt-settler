@@ -13,7 +13,7 @@ require("dotenv").config()
 const secret = process.env.SECRET || "Spengler Uber Alles",
 PORT = process.env.PORT || 8080,
 url = process.env.DATABASEURL || "mongodb+srv://Oriol:0112-omj-8986@cluster0-8kwdj.mongodb.net/debt-settler?retryWrites=true";
-//url = process.env.DATABASEURL || "mongodb://localhost/payback_mern";
+
 mongoose.connect(url, { useNewUrlParser: true });
 
 const Group = require('./database/models/group');
