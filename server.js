@@ -10,9 +10,9 @@ path 		   = require("path");
 
 require("dotenv").config()
 
-const secret = process.env.SECRET || "Spengler Uber Alles",
-PORT = process.env.PORT || 8080,
-url = process.env.DATABASEURL || "mongodb+srv://Oriol:0112-omj-8986@cluster0-8kwdj.mongodb.net/debt-settler?retryWrites=true";
+const secret = process.env.SECRET || "The Speech of the Stars",
+PORT 		 = process.env.PORT || 8080,
+url 		 = process.env.DATABASEURL || "mongodb://localhost/debt-settler";
 
 mongoose.connect(url, { useNewUrlParser: true });
 
