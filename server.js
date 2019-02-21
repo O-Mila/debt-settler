@@ -11,9 +11,8 @@ path 		   = require("path");
 require("dotenv").config()
 
 const secret = process.env.SECRET || "Spengler Uber Alles",
-PORT 		 = process.env.PORT || 8080,
-url 		 = process.env.DATABASEURL || 
-	"mongodb://oriolmilajansa:0112omj8986@ds341605.mlab.com:41605/debt-settler";
+PORT = process.env.PORT || 8080,
+url = process.env.DATABASEURL || "mongodb://oriolmilajansa:0112omj8986@ds341605.mlab.com:41605/debt-settler";
 
 mongoose.connect(url, { useNewUrlParser: true });
 
