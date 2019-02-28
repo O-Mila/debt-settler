@@ -8,12 +8,18 @@ const User = require('../database/models/user');
 router.post('/new', (req, res) => {
 	const { name, members } = req.body;
 	const usernames = members.map(member => member.username);
-	User.find({ username: usernames }, (err, users) => {
+	User.find({ username: usernames }).populate("groups").exec((err, users) => {
 		if (err) return res.json(err);
-		Group.create({ name: name, users: users }, (err, newGroup) => {
-			if (err) return res.json(err);
-			res.json(newGroup)
-		})
+		const groupExists = users.some(user => user.groups.some(group => group.name === name))
+		if(groupExists){
+			res.send("This group name already exists in some member's account");
+		}
+		else {
+			Group.create({ name: name, users: users }, (err, newGroup) => {
+				if (err) return res.json(err);
+				res.json(newGroup)
+			})
+		}
 	})
 })
 

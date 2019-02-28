@@ -6,7 +6,10 @@ passport      = require('passport');
 // Add a new User to the database and login
 router.post('/register', (req, res) => {
 	const { username, password } = req.body;
-	if(password.length > 3){
+	console.log(req.body)
+	console.log(username.length)
+	console.log(password.length)
+	if(password.length > 3 && username.length > 3){
 		const newUser = new User({username: username});
 		User.register(newUser, password, (err, user) => {
 			if (err) return res.send('This username is already registered')
@@ -14,7 +17,13 @@ router.post('/register', (req, res) => {
 				res.json(user);
 			})
 		});	
-	} else res.send('Your password should be at least 4 characters long!')
+	} else if (username.length > 3){
+		res.send('Your password should be at least 4 characters long!')
+	} else if (password.length > 3){
+		res.send('Your username should be at least 4 characters long!')
+	} else {
+		res.send('Your username and your password should be at least 4 characters long!')
+	}
 });
 
 // Login registered account
