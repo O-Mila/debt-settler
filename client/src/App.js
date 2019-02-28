@@ -39,7 +39,7 @@ class App extends Component {
         message: '',
         type: ''
       }
-    }), 1000)
+    }), 2000)
   }
   logIn(username, _id, message, type){
     this.showAlert(message, type)
@@ -67,7 +67,7 @@ class App extends Component {
 	        		<PrivateRoute {...this.state} exact path="/groups" 
                 render={() => <GroupList {...this.state} /> } />
 	        		<PrivateRoute {...this.state} path='/groups/new' 
-                render={() => <AddGroup {...this.state} /> } />
+                render={() => <AddGroup {...this.state} showAlert={this.showAlert} /> } />
 	        		<PrivateRoute {...this.state} exact path={`/groups/:group_id`}
                 render={({match}) => <Group {...this.state} match={match} /> } />
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items`}

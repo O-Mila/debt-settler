@@ -6,7 +6,7 @@ const Alert = props => {
       <div className={`alert alert-${alert.type}`} role='alert'>{alert.message}</div>
     ) : (<div></div>)
     return (
-      <div className='container' id="alert">{currentAlert}</div>
+      <div className="container">{currentAlert}</div>
     )
 }
 

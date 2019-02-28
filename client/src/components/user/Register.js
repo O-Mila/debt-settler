@@ -15,7 +15,6 @@ class Register extends Component {
 	}
 	handleSubmit = e => {
 		e.preventDefault();
-		console.log('Inside submit register')
 		axios.post('http://localhost:8080/api/register', {
 			username: this.state.username,
 			password: this.state.password
@@ -23,7 +22,6 @@ class Register extends Component {
 			if(res.data.username){
 				this.props.logIn(res.data.username, res.data._id, 'Successfully signed in', 'success')
 			} else {
-				console.log(res.data)
 				this.props.showAlert(res.data, 'warning');
 			}
 		}).catch(err => console.log(err))
@@ -38,13 +36,13 @@ class Register extends Component {
 				<form onSubmit={this.handleSubmit} className='ui form'>
 					<div className="field">
 						<label>Username
-							<input type='text' name='username' placeholder='username' 
+							<input type='text' name='username' placeholder="username" 
 								onChange={this.handleChange} required />
 						</label>
 					</div>
 					<div className="field">
 						<label>Password
-							<input type='password' name='password' placeholder='password' 
+							<input type='password' name='password' placeholder="password" 
 								onChange={this.handleChange} required />
 						</label>
 					</div>

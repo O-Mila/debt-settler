@@ -15,7 +15,6 @@ class Login extends Component {
 	}
 	handleSubmit = e => {
 		e.preventDefault();
-		console.log('Inside submit login');
 		axios.post('http://localhost:8080/api/login', {
 			username: this.state.username,
 			password: this.state.password

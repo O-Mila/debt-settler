@@ -2,18 +2,12 @@
 	height: 100%;
 }
 
-#alert {
-	position: absolute;
-	margin-left: auto;
-	margin-right: auto;
-	left: 0;
-	right: 0;
-	top: 10%;
-	z-index: 10;
+div {
+	background-color: #e3f4f3;
 }
 
-div {
-	background: #efe4a7;
+h1, p {
+	color: teal;
 }
 
 .container-fluid {

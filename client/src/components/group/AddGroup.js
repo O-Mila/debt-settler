@@ -24,13 +24,16 @@ class AddGroup extends Component {
     axios.post('http://localhost:8080/api/groups/new', 
       { name: name, members: members })
     .then(response => {
-      axios.get(`http://localhost:8080/api/groups/new/${response.data._id}`)
-      .then(response => {
-        this.setState({
-          redirect: true
+      if(response.data.name){
+        axios.get(`http://localhost:8080/api/groups/new/${response.data._id}`)      
+        .then(() => {
+          this.setState({
+            redirect: true
+          })
         })
-      })
-      .catch(err => console.log(err))
+      } else {
+        this.props.showAlert(response.data, 'warning');        
+      }
     })
     .catch(err => console.log(err))
   }
@@ -66,8 +69,10 @@ class AddGroup extends Component {
     }
   }
   memberList = () => {
-    const { members, page } = this.state
-    const memberClass = page === 2 ? "ui big olive button members" : "list-group-item list-group-item-action"
+    const { members } = this.state
+    const size = members.length > 8 ? 'medium' : 'big'
+    const memberClass = `ui ${size} teal basic button members`
+
     return (
     <div className="h-100 members">
       {
@@ -128,17 +133,17 @@ class AddGroup extends Component {
       <div className="alignment">
       {
         [...Array(3)].map((icon, index) => {
-          const marked = page !== index + 1 ? 'outline ' : ''
-          return <i className={`teal circle ${marked}icon`} key={index}></i>
+          const marked = page !== index + 1 ? 'outline' : ''
+          return <i className={`teal circle ${marked} icon`} key={index}></i>
         })
       }
       </div>
     )
     return (
-      <div className="row h-100">
+      <div className="row h-75">
         <div className="col container arrow-container">{previousPage}</div>
         <div className="col-8">
-          <div className="row h-50">{this.pageContent()}</div>
+          <div className="row h-75">{this.pageContent()}</div>
           <div className="row h-25">{points}</div>
         </div>
         <div className="col container arrow-container">{nextPage}</div>

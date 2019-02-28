@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import DebtsList from './DebtsList';
-import ItemList from '../item/ItemList';
+import React, { Component } from "react";
+import axios from "axios";
+import DebtsList from "./DebtsList";
+import ItemList from "../item/ItemList";
+import Balance from "./Balance";
 
 class Group extends Component {
 	state = {
@@ -13,11 +13,9 @@ class Group extends Component {
 		balance: []
 	}
 	componentDidMount(){
-		console.log(this.state)
-		const { group_id } = this.props.match.params
-		axios.get(`http://localhost:8080/api/groups/${group_id}`)
+		const { groups, index } = this.props
+		axios.get(`http://localhost:8080/api/groups/${groups[index]._id}`)
 		.then(response => {
-			console.log(response.data)
 			this.setState({
 				group: response.data.group,
 				balance: response.data.balance
@@ -25,23 +23,27 @@ class Group extends Component {
 		})
 		.catch(err => console.log(err));
 	}
+	componentDidUpdate(prevProps){
+    	if(this.props.index !== prevProps.index){
+    		this.componentDidMount()
+    	}
+  	}
 	transferMade(){
 		this.componentDidMount()
 	}
 	render(){
 		const { name } = this.state.group;
-		const { group_id } = this.props.match.params
+		const { groups, index } = this.props;
 		return (
-				<div>
-					<h1>{name}</h1>
-					<DebtsList {...this.state} {...this.props} group_id={group_id} 
-						transferMade={this.transferMade.bind(this)} />
-					<ItemList {...this.state} group_id={group_id} />					
-					<Link to='/groups' className='ui left floated teal button'>Go back</Link>
-					<Link to={`/groups/${group_id}/items/new`} 
-						className='ui right floated yellow button'>Add new item</Link>
-				</div>
-			)
+			<div>
+				<h1>{name}</h1>
+				<Balance {...this.state} />
+				<DebtsList {...this.state} {...this.props} group_id={groups[index]._id} 
+					transferMade={this.transferMade.bind(this)} />
+				<ItemList {...this.state} group_id={groups[index]._id} 
+					groups={groups} index={index}/>		
+			</div>
+		)
 	}
 }
 

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class AddUser extends Component {
-	state = {
-		search: '',
+  state = {
+    search: '',
     loading: false,
     suggestions: []
-	}
+  }
   searchUser = e => {
     this.setState({ search: this.refs.search.value })
-    if(this.state.search.length > 3){
+    if(this.state.search.length > 2){
       this.setState({ loading: true })
       axios.post('http://localhost:8080/api/users',
         { search: this.state.search, members: this.props.members })
@@ -21,7 +21,6 @@ class AddUser extends Component {
         if(!this.state.search){ 
           this.setState({ loading: false })
         }
-        console.log(this.state.suggestions)
       }).catch(err => console.log(err))      
     } else {
       this.setState({ suggestions: [], loading: false })
@@ -34,9 +33,9 @@ class AddUser extends Component {
     })
     this.refs.search.value = '';
   }
-	render() {
+  render() {
     const { suggestions, loading } = this.state
-    const isLoading = loading ? 'loading ' : ''
+    const isLoading = loading ? 'loading' : ''
     const { addMember } = this.props
     const suggestionsList = (
       <div>
@@ -51,7 +50,7 @@ class AddUser extends Component {
       </div>
     )
     return (
-          <div className={`ui fluid category ${isLoading}search w-100 h-50 centered`} >
+          <div className={`ui fluid category ${isLoading} search w-100 h-50 centered`} >
             <div className="ui icon input w-100 centered">
               <input className="ui huge input prompt" type='text' onChange={this.searchUser} 
                 placeholder="Add user..." name='search' ref='search' />
@@ -59,8 +58,8 @@ class AddUser extends Component {
             </div>
             <div>{suggestionsList}</div>
           </div>
-			)
-	}
+      )
+  }
 }
 
 export default AddUser;

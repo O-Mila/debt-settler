@@ -16,25 +16,41 @@ class ItemList extends Component {
     })
     .catch(err => console.log(err))
   }
+  componentDidUpdate(prevProps){
+    if(this.props.index !== prevProps.index){
+      this.componentDidMount()
+    }
+  }
   render() {
     const { items } = this.state;
-    const { group_id } = this.props
-    const itemList = (
-      <div className="list-group list-group-flush">
-      {
-        items.map(item => {
-            return  <Link to={`/groups/${group_id}/items/${item._id}`} key={item._id} 
-                      className='list-group-item list-group-item-action'>
-                        {item.name}
-                    </Link>
-          })
-      }
+    const { group_id, groups, index } = this.props
+    const itemList = items.length ? (
+      <div>
+        <div className="ui horizontal divider">Items</div>
+        <div className="ui vertical segment">
+        {
+          items.map(item => {
+              return  <Link to={`/groups/${group_id}/items/${item._id}`} key={item._id} 
+                        className="ui yellow button">                      
+                          {item.name}                      
+                      </Link>
+            })
+        }
+        <Link to={`/groups/${groups[index]._id}/items/new`}>
+          <i className="plus big olive circle icon"></i>
+        </Link>   
+        </div>
+      </div>
+      ) : (
+      <div>
+        <div className="ui section divider"></div>
+        <Link to={`/groups/${groups[index]._id}/items/new`} className="ui olive button">
+          Add new item
+        </Link>         
       </div>
       )
     return (
-      <div>
-        <div>{itemList}</div>
-      </div>
+      <div>{itemList}</div>
     );
   }
 }
