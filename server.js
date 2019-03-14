@@ -2,11 +2,14 @@ const mongoose = require("mongoose"),
 express 	   = require("express"),
 bodyParser 	   = require("body-parser"),
 app 		   = express(),
+methodOverride = require("method-override"),
 cors		   = require('cors'),
 passport	   = require("passport"),
 LocalStrategy  = require("passport-local"),
 session 	   = require('express-session'),
 path 		   = require("path");
+
+
 
 require("dotenv").config()
 
@@ -24,17 +27,15 @@ const Item = require('./database/models/item');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Put & delete requests
+app.use(methodOverride("_method"));
+
 // Configure session authentication
 app.use(session({
 	secret: secret,
 	resave: false,
 	saveUninitialized: false
 }));
-
-// Console.log req.session
-app.use( (req, res, next) => {
-  return next();
-});
 
 // Passport and session initializing
 app.use(passport.initialize());
@@ -58,15 +59,15 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 // Configure routing
-const userRoutes = require('./routes/users');
-const groupRoutes = require('./routes/groups');
-const itemRoutes = require('./routes/items');
-const transferRoutes = require('./routes/transfers');
+const userRoutes = require("./routes/users");
+const groupRoutes = require("./routes/groups");
+const itemRoutes = require("./routes/items");
+const transferRoutes = require("./routes/transfers");
 
-app.use('/api', userRoutes);
-app.use('/api/groups', groupRoutes);
-app.use('/api/groups/:group_id/items', itemRoutes);
-app.use('/api/groups/:group_id/transfers', transferRoutes);
+app.use("/api", userRoutes);
+app.use("/api/groups", groupRoutes);
+app.use("/api/groups/:group_id/items", itemRoutes);
+app.use("/api/groups/:group_id/transfers", transferRoutes);
 
 // Sends index.html to the client
 app.get("*", (req, res) => {

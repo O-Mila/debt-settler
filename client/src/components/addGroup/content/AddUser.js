@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import SuggestionsList from "./SuggestionsList";
+import axios from "axios";
 
 class AddUser extends Component {
-  state = {
-    search: '',
-    loading: false,
-    suggestions: []
+  constructor(props){
+    super(props)
+    this.state = {
+      search: '',
+      loading: false,
+      suggestions: []
+    }
+  this.searchUser = this.searchUser.bind(this)
+  this.deleteSuggestions = this.deleteSuggestions.bind(this)
   }
+
   searchUser = e => {
     this.setState({ search: this.refs.search.value })
     if(this.state.search.length > 2){
@@ -33,22 +40,11 @@ class AddUser extends Component {
     })
     this.refs.search.value = '';
   }
+
   render() {
-    const { suggestions, loading } = this.state
+    const { loading } = this.state
     const isLoading = loading ? 'loading' : ''
-    const { addMember } = this.props
-    const suggestionsList = (
-      <div>
-        {
-          suggestions.map(suggestion => {
-            return  <div key={suggestion._id} className="fluid big ui button" 
-                      onClick={() => { addMember(suggestion); this.deleteSuggestions() } }>
-                        {suggestion.username}                        
-                    </div>
-          })
-        }
-      </div>
-    )
+
     return (
           <div className={`ui fluid category ${isLoading} search w-100 h-50 centered`} >
             <div className="ui icon input w-100 centered">
@@ -56,7 +52,8 @@ class AddUser extends Component {
                 placeholder="Add user..." name='search' ref='search' />
               <i onClick={this.searchUser} className="search icon"></i>
             </div>
-            <div>{suggestionsList}</div>
+            <SuggestionsList {...this.state} {...this.props} 
+              deleteSuggestions={this.deleteSuggestions} />
           </div>
       )
   }

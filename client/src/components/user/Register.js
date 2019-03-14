@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -21,16 +20,13 @@ class Register extends Component {
 		}).then(res => {
 			if(res.data.username){
 				this.props.logIn(res.data.username, res.data._id, 'Successfully signed in', 'success')
+				window.history.back();
 			} else {
 				this.props.showAlert(res.data, 'warning');
 			}
 		}).catch(err => console.log(err))
 	}
 	render(){
-		const { isLoggedIn } = this.props;
-		if (isLoggedIn) {
-			return <Redirect to='/groups' />
-		}
 		return (
 			<div className='container'>
 				<form onSubmit={this.handleSubmit} className='ui form'>

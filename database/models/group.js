@@ -1,23 +1,35 @@
-const mongoose = require('mongoose');
-const UserSchema = require('./user');
-const ItemSchema = require('./item');
-const PaymentSchema = require('./payment');
+const mongoose = require("mongoose");
+const ItemSchema = require("./item");
+const PaymentSchema = require("./payment");
+const TransferSchema = require("./transfer");
 const Schema = mongoose.Schema;
 
 const GroupSchema = new Schema({
 	name: String,
-	users: [{
-		type: Schema.Types.ObjectId,
-	 	ref: "User"
+	currency: String,
+	members: [{
+		user: {
+			type: Schema.Types.ObjectId,
+	 		ref: "User"
+		},
+		balance: Number,
+		debts: 	[{
+			amount: Number,
+			receiver: {
+				type: Schema.Types.ObjectId,
+				ref: "User"
+			}
+		}]
 	}],
 	items: [{
 	 	type: Schema.Types.ObjectId,
 	 	ref: "Item"
 	}],
-	payments: [{
+	transfers: [{
 		type: Schema.Types.ObjectId,
-		ref: "Payment"
-	}]
+		ref: "Transfer"
+	}],
+	date: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Group", GroupSchema);

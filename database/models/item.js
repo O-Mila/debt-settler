@@ -7,7 +7,8 @@ const itemSchema = new Schema({
 	payments: [{
 		type: Schema.Types.ObjectId,
 		ref: "Payment"		
-	}]
+	}],
+	date: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Item", itemSchema);

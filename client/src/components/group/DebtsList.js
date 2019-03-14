@@ -13,79 +13,86 @@ class DebtsList extends Component {
 			consumerIndex: j,
 			amount: amount
 		})
-		console.log(this.state)
 	}
 	handleChange = e => {
 		this.setState({
 			amount: e.target.value
 		})
-		console.log(this.state)
 	}
-	handleSubmit = (e,payer,receiver) => {
+	handleSubmit = (e, payer_id, receiver_id) => {
 		e.preventDefault()
-		console.log(this.state)
+		const { amount } = this.state
 		const { group_id, transferMade } = this.props
-		axios.post(`http://localhost:8080/api/groups/${group_id}/transfers/new`, { 
-			payer: payer,
-			receiver: receiver,
-			amount: this.state.amount
-		})
-		.then(response => {
-			console.log(response)
+		axios.post(`http://localhost:8080/api/groups/${group_id}/transfers/new`, 
+			{ payer_id, receiver_id, amount })
+		.then(() => axios.put(`http://localhost:8080/api/groups/${group_id}/debts`))
+		.then(() => {
 			this.setState({
 				payerIndex: '',
 				consumerIndex: '',
 				amount: ''
 			})
-			console.log(this.state)
-			transferMade()
+			transferMade()			
 		})
+		.catch(err => console.log(err))
 	}
 	render(){
 		const { payerIndex, consumerIndex } = this.state
-		const { balance } = this.props
-		const indebtedUsers = balance.filter(user => user.debt.amount.length)
+		const { members, currency } = this.props.group
+		const indebtedUsers = members.filter(member => member.debts.length)
+			.sort((a, b) => 
+			Math.max(a.debts.map(debt => debt.amount)) 
+			< Math.max(b.debts.map(debt => debt.amount)) 
+			? 1 : -1)
 		const indebted = indebtedUsers.length ? (
 			<div>
-				<div className="ui horizontal divider">Who owes who</div>					
-				<div className="ui vertical segment">
-				{
-					indebtedUsers.map((user, i) =>
-						<div key={user._id}>
-							{
-								user.debt.amount.map((amount, j) => 
-									(i === payerIndex && j === consumerIndex) ?
-									(
-									<div key={user.debt.receiver[j]}>
-										<form onSubmit={e => 
-											this.handleSubmit(e,user.debt.receiver[j],user.username)} >
-											{`${user.username} pays `}
-											<input type='number' name='amount' value={this.state.amount}
-												onChange={this.handleChange} />
-											{` to ${user.debt.receiver[j]}`}
-											<button>Transfer</button>
-										</form>
-									</div>
-									) 
+			{
+				indebtedUsers.map((member, i) =>
+					<span key={member._id}>
+					{
+						member.debts.map((debt, j) => 
+							(i === payerIndex && j === consumerIndex) ?
+							(
+							<span key={debt._id} className="ui black basic button">
+								{`${member.user.username} pays `}
+								<span className="ui transparent input">
+									<input type='number' name='amount' className="transfInput"
+									value={this.state.amount} onChange={this.handleChange} />
+									{`${currency} to ${debt.receiver.username}`}
+								</span>
+								<span>   </span>
+								<span className="mini green ui button" onClick={e => 
+								this.handleSubmit(e, member.user._id, debt.receiver._id)}>
+									Transfer
+								</span>
+							</span>
+							) 
 
-									: 
+							: 
 
-									(
-									<div key={user.debt.receiver[j]} 
-										onClick={() => this.handlePayment(i,j,amount)} >
-											{`${user.username} owes ${amount} to ${user.debt.receiver[j]}`}
-									</div>
-									)
-								)
-							}
-						</div>
-					)
-				}
-				</div>
+							(
+							<span key={debt._id} className="ui teal button"
+								onClick={() => this.handlePayment(i, j, debt.amount)} >
+								{`${member.user.username} owes ${debt.amount} ${currency} 
+								to ${debt.receiver.username}`}
+							</span>
+							)
+						)
+					}
+					</span>
+				)
+			}
 			</div>
-		) : ''
+		) : <div className="centered">No one owes nothing to anyone.</div>
 		return (
-			<div>{indebted}</div>
+			<div>
+				<div className="ui horizontal divider">
+					<i className="calculator icon"></i>
+					<span>   </span>
+					Debt Settlement
+				</div>					
+				<div className="ui vertical segment nullpadding">{indebted}</div>
+			</div>
 		)	
 	}
 }

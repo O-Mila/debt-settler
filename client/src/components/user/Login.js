@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import axios from 'axios';
 
 class Login extends Component {
@@ -20,6 +20,7 @@ class Login extends Component {
 			password: this.state.password
 		}).then(res => {
 			this.props.logIn(res.data[0].username, res.data[0]._id, 'Successfully signed in', 'success')
+			
 		}).catch(err => {
 			this.props.showAlert('User not found', 'danger')
 		})

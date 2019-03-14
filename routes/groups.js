@@ -1,90 +1,92 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Group = require('../database/models/group');
-const Payment = require('../database/models/payment');
-const User = require('../database/models/user');
+const Group = require("../database/models/group");
+const Payment = require("../database/models/payment");
+const User = require("../database/models/user");
 
 // Add new group
-router.post('/new', (req, res) => {
-	const { name, members } = req.body;
+router.post("/new", (req, res) => {
+	const { name, currency, members } = req.body;
 	const usernames = members.map(member => member.username);
 	User.find({ username: usernames }).populate("groups").exec((err, users) => {
 		if (err) return res.json(err);
 		const groupExists = users.some(user => user.groups.some(group => group.name === name))
 		if(groupExists){
 			res.send("This group name already exists in some member's account");
-		}
-		else {
-			Group.create({ name: name, users: users }, (err, newGroup) => {
-				if (err) return res.json(err);
-				res.json(newGroup)
+		} else {
+			const groupMembers = users.map(user => {
+				return { user, balance: 0, debts: [] }
 			})
+			const date = Date.now()
+			Group.create({ name: name, currency: currency, members: groupMembers, date: date })
+			.then(newGroup => {
+				res.json(newGroup);
+			})
+			.catch(err => res.json(err))
 		}
 	})
 })
 
 // Add group to the user objects
-router.get('/new/:group_id', (req, res) => {
-	Group.findById(req.params.group_id).populate('users').exec((err, group) => {
+router.post("/new/:group_id", (req, res) => {
+	Group.findById(req.params.group_id).populate({
+		path: "members.user",
+		model: "User"
+	}).exec((err, group) => {
 		if(err) return res.json(err);
-		const usernames = group.users.map(user => user.username);
-		User.find({ username: usernames }, (err, users) => {
-			users.forEach((user) => {
+		const usernames = group.members.map(member => member.user.username);
+		User.find({ username: usernames }) 
+		.then(users => {
+			users.forEach(user => {
 				user.groups.push(group);
 				user.save();
 			})
-			res.json(users)
+			res.json(users);			
 		})
+		.catch(err => res.json(err))
 	})
 })
 
-// Show selected group
-router.get('/:group_id', (req, res) => {
-	const { group_id } = req.params
-	Group.findById(req.params.group_id).populate('users').populate({
-		path: 'payments',
-		model: 'Payment',
-		populate: {
-			path: 'user',
-			model: 'User'
+// Update group debts
+router.put("/:group_id/debts", (req, res) => {
+	Group.findById(req.params.group_id)
+	.populate({ path: "members.debts.receiver", model: "User" })
+	.exec((err, group) => {
+		if(err) res.json(err)
+		const balances = group.members.map(member => member.balance)
+		group.members.forEach(member => member.debts = [])
+		while(balances.some(balance => balance !== 0)){
+			let greatestIndex = balances.indexOf(Math.max(...balances));
+			let lowestIndex = balances.indexOf(Math.min(...balances));
+			let amount = Math.min(Math.abs(balances[greatestIndex]), Math.abs(balances[lowestIndex]))
+			group.members[lowestIndex].debts.push({
+				amount: amount,
+				receiver: group.members[greatestIndex].user
+			})
+			balances[greatestIndex] -= amount
+			balances[lowestIndex] += amount
 		}
-	}).exec((err, group) => {
-		if (err) return res.json(err);
-		const { payments } = group
-		const users = group.users.map(user => {
-			return {
-				_id: user._id,
-				username: user.username,
-				payments: 0,
-				debt: {
-					amount: [],
-					receiver: []
-				}
-			}
-		})
-		users.forEach(user => {
-			for(let i = 0; i < payments.length; i++){
-				if(user._id.equals(payments[i].user._id)){
-					user.payments += payments[i].paid
-					user.payments -= payments[i].received
-				}
-			}
-		})
-		const balance = users.map(user => user.payments)
-		while(balance.some(item => item !== 0)){
-			let greatestIndex = balance.indexOf(Math.max(...balance));
-			let lowestIndex = balance.indexOf(Math.min(...balance));
-			let debt = Math.min(Math.abs(balance[greatestIndex]), Math.abs(balance[lowestIndex]))
-			users[lowestIndex].debt.amount.push(debt)
-			users[lowestIndex].debt.receiver.push(users[greatestIndex].username)
-			balance[greatestIndex] -= debt
-			balance[lowestIndex] += debt
-		}
-		res.json({
-			balance: users,
-			group: group
-		})
+		group.save()
+		res.json(group)
 	})
-});
+})
+
+
+
+// Retrieve selected group
+router.get("/:group_id", (req, res) => {
+	const { group_id } = req.params
+	Group.findById(req.params.group_id).populate("items")
+	.populate({ path: "transfers", model: "Transfer",
+		populate: [{ path: "payer", model: "User" },
+				   { path: "receiver", model: "User" }]
+	})
+	.populate({ path: "members.user", model: "User" })
+	.populate({ path: "members.debts.receiver", model: "User" })
+	.exec((err, group) => {
+		if (err) return res.json(err);
+		res.json(group);
+	})
+})
 
 module.exports = router

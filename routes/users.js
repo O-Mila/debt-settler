@@ -6,11 +6,9 @@ passport      = require('passport');
 // Add a new User to the database and login
 router.post('/register', (req, res) => {
 	const { username, password } = req.body;
-	console.log(req.body)
-	console.log(username.length)
-	console.log(password.length)
 	if(password.length > 3 && username.length > 3){
-		const newUser = new User({username: username});
+		const date = Date.now()
+		const newUser = new User({username: username, date: date});
 		User.register(newUser, password, (err, user) => {
 			if (err) return res.send('This username is already registered')
 			passport.authenticate('local')(req, res, () => {
@@ -43,8 +41,8 @@ router.get('/logout', (req, res) => {
 })
 
 // Show user groups
-router.get('/:user_id/groups', (req, res) => {
-	User.findById(req.params.user_id).populate('groups').exec((err, user) => {
+router.get("/:user_id/groups", (req, res) => {
+	User.findById(req.params.user_id).populate("groups").exec((err, user) => {
 		if (err) return res.json(err);
 		res.json(user);
 	})

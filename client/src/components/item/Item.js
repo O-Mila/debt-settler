@@ -1,61 +1,59 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 class Item extends Component {
 	state = {
-		name: '',
-		payments: []
+		item: {},
+		currency: ''
 	}
 	componentDidMount(){
 		const { group_id, item_id } = this.props.match.params
 		axios.get(`http://localhost:8080/api/groups/${group_id}/items/${item_id}`)
 		.then(response => {
-			console.log('Back from the server')
-			console.log(response)
 			this.setState({
-				name: response.data.name,
-				payments: response.data.payments
+				item: response.data.item,
+				currency: response.data.currency
 			})
-			console.log(this.state)
 		})
 		.catch(err => console.log(err))
 	}
 
 	render(){
-		const { group_id } = this.props.match.params
-		const { name, payments } = this.state
-		const paymentHeader =  (
+		const { item, currency } = this.state
+		const paymentHeader = (
 			<thead>
 				<tr>
-					<th>User</th>
-					<th>Paid</th>
-					<th>Received</th>
+					<th scope="col">User</th>
+					<th scope="col">Paid</th>
+					<th scope="col">Consumed</th>
 				</tr>
 			</thead>
 			) 
-		const paymentList = (
+		const paymentList = item.payments ? (
 			<tbody>
 				{						
-					payments.map(payment => {
+					item.payments.map(payment => {
 						return  <tr key={payment._id}>
 									<td>{payment.user.username}</td>
-									<td>{payment.paid}</td>
-									<td>{payment.received}</td>
+									<td>{payment.paid} {currency}</td>
+									<td>{payment.received} {currency}</td>
 								</tr>
 					})
 				}
 			</tbody>
-		) 
+		) : ''
 
 		return (
-				<div className='container'>
-					<h1>{name}</h1>
-					<table>
+				<div className="container">
+					<h1 className="centered">{item.name}</h1>
+					<table className="table">
 						{paymentHeader}
 						{paymentList}
 					</table>
-					<Link to={`/groups/${group_id}`} className='ui teal button'>Go back</Link>
+					<div className="ui teal button" 
+						onClick={() => window.history.back()}>
+							Go back
+					</div>
 				</div>
 			)
 	}

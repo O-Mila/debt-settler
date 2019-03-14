@@ -14,7 +14,8 @@ const UserSchema = new Schema({
 	payments: [{
 	 	type: Schema.Types.ObjectId,
 	 	ref: "Payment"
-	}]
+	}],
+	date: { type: Date, default: Date.now }
 });
 
 UserSchema.plugin(passportLocalMongoose);

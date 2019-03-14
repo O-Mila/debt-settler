@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import Navbar from './components/Navbar';
 import Alert from './components/Alert';
-import GroupList from './components/group/GroupList';
-import AddGroup from './components/group/AddGroup';
-import Group from './components/group/Group';
-import ItemList from './components/item/ItemList';
-import AddItem from './components/item/AddItem';
+import Groups from './components/group/Groups';
+import AddGroup from './components/addGroup/AddGroup';
+import AddItem from './components/addItem/AddItem';
 import Item from './components/item/Item';
+import TransactionList from './components/transactions/TransactionList';
 import Login from './components/user/Login';
 import Logout from './components/user/Logout';
 import Register from './components/user/Register';
@@ -20,7 +19,8 @@ class App extends Component {
   	this.state = {
   		isLoggedIn: false,
   		username: '',
-      _id: '',
+      user_id: '',
+      index: 0,
       alert: {
         message: '',
         type: ''
@@ -29,6 +29,7 @@ class App extends Component {
   	this.logIn = this.logIn.bind(this)
     this.logOut = this.logOut.bind(this)
     this.showAlert = this.showAlert.bind(this)
+    this.changeGroup = this.changeGroup.bind(this)
   }
   showAlert(message, type){
     this.setState({
@@ -39,14 +40,14 @@ class App extends Component {
         message: '',
         type: ''
       }
-    }), 2000)
+    }), 1000)
   }
-  logIn(username, _id, message, type){
+  logIn(username, user_id, message, type){
     this.showAlert(message, type)
     this.setState({
       isLoggedIn: true,
       username: username,
-      _id: _id
+      user_id: user_id
     })
   }
   logOut(message, type){
@@ -54,8 +55,12 @@ class App extends Component {
     this.setState({
       isLoggedIn: false,
       username: '',
-      _id: ''
+      user_id: '',
+      index: 0
     })
+  }
+  changeGroup = (index) => {
+    this.setState({ index: index })
   }
   render() {
     return (
@@ -65,23 +70,32 @@ class App extends Component {
             <Alert {...this.state} />
 	        	<Switch>
 	        		<PrivateRoute {...this.state} exact path="/groups" 
-                render={() => <GroupList {...this.state} /> } />
-	        		<PrivateRoute {...this.state} path='/groups/new' 
-                render={() => <AddGroup {...this.state} showAlert={this.showAlert} /> } />
-	        		<PrivateRoute {...this.state} exact path={`/groups/:group_id`}
-                render={({match}) => <Group {...this.state} match={match} /> } />
-              <PrivateRoute {...this.state} exact path={`/groups/:group_id/items`}
-                render={({match}) => <ItemList {...this.state} match={match} /> } />
+                render={() => <Groups {...this.state} changeGroup={this.changeGroup} /> } />
+
+	        		<PrivateRoute {...this.state} path="/groups/new" render={() => 
+                <AddGroup {...this.state} showAlert={this.showAlert} 
+                changeGroup={this.changeGroup} /> } />
+              
               <PrivateRoute {...this.state} path={`/groups/:group_id/items/new`}
                 render={({match}) => <AddItem {...this.state} match={match} /> } />
+              
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/:item_id`}
                 render={({match}) => <Item {...this.state} match={match} /> } />
-              <PrivateRoute {...this.state} path='/logout'
-                render={() => <Logout {...this.state} logOut={this.logOut} showAlert={this.showAlert} />} />
-	        		<NotLoggedRoute {...this.state} path="/(|login)/"
-                render={() => <Login {...this.state} logIn={this.logIn} showAlert={this.showAlert} />} />
-	        		<NotLoggedRoute {...this.state} path='/register'
-                render={() => <Register {...this.state} logIn={this.logIn} showAlert={this.showAlert} />} />
+              
+              <PrivateRoute {...this.state} exact path={`/groups/:group_id/items`}
+                render={({match}) => <TransactionList {...this.state} match={match} /> } />
+
+              <PrivateRoute {...this.state} path="/logout"
+                render={() => <Logout {...this.state} logOut={this.logOut} 
+                showAlert={this.showAlert} />} />
+	        		
+              <NotLoggedRoute {...this.state} path="/(|login)/"
+                render={() => <Login {...this.state} logIn={this.logIn} 
+                showAlert={this.showAlert} />} />
+	        		
+              <NotLoggedRoute {...this.state} path="/register"
+                render={() => <Register {...this.state} logIn={this.logIn} 
+                showAlert={this.showAlert} />} />
 	        	</Switch>
 	        </div>
      	</BrowserRouter>
