@@ -5,11 +5,18 @@ const Item = require("../database/models/item");
 const Payment = require("../database/models/payment");
 const router = express.Router({mergeParams: true});
 
+twoDecimals = amount => Math.round(amount*100)/100
+
 // Create item
 router.post('/', (req, res) => {
-	const { name, paid, received, members, group_id } = req.body;
+	const { name, members, group_id } = req.body;
+	const total = twoDecimals(req.body.total);
+	const paid = req.body.paid.map(payment => twoDecimals(payment));
+	const received = req.body.received.map(consumption => twoDecimals(consumption));
 	const payments = members.map(member => member.user).map((user, index) => {
-		return { paid: paid[index], received: received[index], user }
+		return { 
+			paid: paid[index], received: received[index], user
+		}
 	})
 	const date = Date.now()
 	Payment.insertMany(payments)
@@ -35,7 +42,8 @@ router.post('/new', (req, res) => {
 			group.members.forEach(member => {
 				for(let i = 0; i < group.members.length; i++){
 					if(member.user._id.equals(item.payments[i].user._id)){
-						member.balance += item.payments[i].paid - item.payments[i].received
+						member.balance = twoDecimals(member.balance + 
+							item.payments[i].paid - item.payments[i].received)
 					}
 				}
 			})

@@ -5,10 +5,12 @@ const Payment = require("../database/models/payment");
 const Transfer = require("../database/models/transfer");
 const router = express.Router({mergeParams: true});
 
+twoDecimals = amount => Math.round(amount*100)/100
+
 // Add new transfer
 router.post('/new', (req, res) => {
 	const { payer_id, receiver_id } = req.body
-	const amount = Math.round(req.body.amount * 100) / 100
+	const amount = twoDecimals(req.body.amount)
 	const { group_id } = req.params
 	User.findById(payer_id)
 	.then(foundPayer => {
@@ -26,9 +28,9 @@ router.post('/new', (req, res) => {
 					group.transfers.push(transfer)
 					group.members.forEach(member => {
 						if (member.user._id.equals(foundPayer._id)){
-							member.balance += Number(amount)
+							member.balance = twoDecimals(member.balance + Number(amount))
 						} else if (member.user._id.equals(foundReceiver._id)){
-							member.balance -= Number(amount)
+							member.balance = twoDecimals(member.balance - Number(amount))
 						}
 					})
 					group.save();

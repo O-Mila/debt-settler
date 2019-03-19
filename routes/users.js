@@ -3,6 +3,11 @@ router 		  = express.Router(),
 User 		  = require('../database/models/user'),
 passport      = require('passport');
 
+// Escape Regular Expressions (used when searching users to add to group)
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 // Add a new User to the database and login
 router.post('/register', (req, res) => {
 	const { username, password } = req.body;
@@ -47,11 +52,6 @@ router.get("/:user_id/groups", (req, res) => {
 		res.json(user);
 	})
 })
-
-// Escape Regular Expressions (used when searching users to add to group)
-function escapeRegex(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
 
 // Search users
 router.post('/users', (req, res) => {

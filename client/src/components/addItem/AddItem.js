@@ -54,6 +54,33 @@ class AddItem extends Component {
       		[e.target.name]: e.target.value
     	})
 	}
+	twoDecimals = amount => {
+		return Math.round(amount * 100)/100
+	}
+	handlePrecision = (newAmounts, total) => {
+		var k = 0
+		var totalAmount = newAmounts.reduce((acc, a) => acc + a)
+		while(total !== this.twoDecimals(totalAmount)) {
+		 	if(total > this.twoDecimals(totalAmount)) {
+				totalAmount = totalAmount + Number(0.01)
+				if (newAmounts[k] !== 0) newAmounts[k] = 
+					this.twoDecimals(newAmounts[k] + Number(0.01))
+			} else {
+				totalAmount = totalAmount - Number(0.01)
+				if (newAmounts[k] !== 0) newAmounts[k] =
+					this.twoDecimals(newAmounts[k] - Number(0.01))
+			}
+			k++
+		}
+	}
+	// updateConsumptions = (received, total, consumers) => {
+	// 	return (
+	// 		received.amounts.map((amount, i) => {
+	// 			if(received.benefits[i]) return Math.round(total/consumers*100)/100
+	// 			return 0
+	// 		})
+	// 	)
+	// }
 	handlePaymentsChange = (i, e) => {
 		e.persist()
 		this.setState(state => {
@@ -69,17 +96,19 @@ class AddItem extends Component {
 			for(let k = 0; k < paid.length; k++){
 				total += Number(paid[k])
 			}
-			total = Math.round(total*100)/100
+			total = this.twoDecimals(total)
 			return { total }
 		})
 		this.setState(state => {
 			const { total, received } = state
 			const consumers = received.benefits.filter(benefit => benefit).length
 			const newAmounts = received.amounts.map((amount, i) => {
-				if(received.benefits[i]) return Math.round(total/consumers*100)/100
+				if(received.benefits[i]) return this.twoDecimals(total/consumers)
 				return 0
 			})
-			return { 
+			//const newAmounts = this.updateConsumptions(received, total, consumers)
+			this.handlePrecision(newAmounts, total)
+			return {
 				received: { 
 					amounts: newAmounts, 
 					benefits: received.benefits 
@@ -100,9 +129,11 @@ class AddItem extends Component {
 			})
 			const consumers = newBenefits.filter(benefit => benefit).length
 			const newAmounts = received.amounts.map((amount, j) => {
-				if(newBenefits[j]) return Math.round(total/consumers*100)/100
+				if(newBenefits[j]) return this.twoDecimals(total/consumers)
 				return 0
 			})
+			//const newAmounts = this.updateConsumptions(received, total, consumers)
+			this.handlePrecision(newAmounts, total)
 			return {
 				received: {
 					amounts: newAmounts,
@@ -118,7 +149,7 @@ class AddItem extends Component {
 		if(total > 0){
 			const { group_id } = this.props.match.params
 			axios.post(`http://localhost:8080/api/groups/${group_id}/items`,
-				{ name, members: group.members, paid, received: received.amounts, group_id })
+				{name, members: group.members, paid, received: received.amounts, total, group_id})
 			.then(response => {
 				axios.post(`http://localhost:8080/api/groups/${group_id}/items/new`,
 					{ item_id: response.data._id })

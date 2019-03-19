@@ -4,6 +4,8 @@ const Group = require("../database/models/group");
 const Payment = require("../database/models/payment");
 const User = require("../database/models/user");
 
+twoDecimals = amount => Math.round(amount*100)/100
+
 // Add new group
 router.post("/new", (req, res) => {
 	const { name, currency, members } = req.body;
@@ -60,11 +62,11 @@ router.put("/:group_id/debts", (req, res) => {
 			let lowestIndex = balances.indexOf(Math.min(...balances));
 			let amount = Math.min(Math.abs(balances[greatestIndex]), Math.abs(balances[lowestIndex]))
 			group.members[lowestIndex].debts.push({
-				amount: amount,
+				amount: twoDecimals(amount),
 				receiver: group.members[greatestIndex].user
 			})
-			balances[greatestIndex] -= amount
-			balances[lowestIndex] += amount
+			balances[greatestIndex] = twoDecimals(balances[greatestIndex] - amount)
+			balances[lowestIndex] = twoDecimals(balances[lowestIndex] + amount)
 		}
 		group.save()
 		res.json(group)

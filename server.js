@@ -9,8 +9,6 @@ LocalStrategy  = require("passport-local"),
 session 	   = require('express-session'),
 path 		   = require("path");
 
-
-
 require("dotenv").config()
 
 const secret = process.env.SECRET || "The Speech of the Stars",

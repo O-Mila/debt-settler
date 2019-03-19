@@ -40,7 +40,9 @@ class ShowGroup extends Component {
 		const transactionList = group._id ? <TransactionList {...this.state} /> : ''
 		return (
 			<div>
-				<h1 className="centered h-25">{group.name}</h1>
+				<h1 className="d-flex align-items-center justify-content-center h-25">
+					{group.name}
+				</h1>
 				<div>{balance}</div>
 				<div>{debtsList}</div>
 				<div>{transactionList}</div>

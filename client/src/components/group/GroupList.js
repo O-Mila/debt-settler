@@ -8,7 +8,7 @@ const GroupList = props => {
           {
             groups.map((group, i) => {
               return  <div onClick={() => changeGroup(i)} key={group._id}
-                        className="circular ui button">
+                        className="circular teal ui button">
                           {group.name}
                       </div>
             })

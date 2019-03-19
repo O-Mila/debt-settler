@@ -4,7 +4,7 @@ const PageTwo = props => {
 		const { group, handlePaymentsChange } = props
 		const payers = (
 			<div className="h-75">
-				<h1 className="h-50 centered">Who paid?</h1>
+				<h1 className="h-50 d-flex align-items-center justify-content-center">Who paid?</h1>
 				<div className="h-50 centered">
 				{
 					group.members.map((member, i) => {

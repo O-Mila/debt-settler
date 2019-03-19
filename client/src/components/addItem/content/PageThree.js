@@ -8,7 +8,9 @@ const PageThree = props => {
 	}
 	const consumers = (
 		<div className="h-75">
-			<h1 className="h-50 centered">For whom?</h1>
+			<h1 className="h-50 d-flex align-items-center justify-content-center">
+				For whom?
+			</h1>
 			<div className="h-50 centered">
 			{
 				group.members.map((member, i) => {

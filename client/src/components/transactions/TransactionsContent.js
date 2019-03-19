@@ -8,16 +8,16 @@ const TransactionsContent = props => {
   const transactions = items.concat(transfers)
       .sort((a, b) => a.date < b.date ? 1 : -1);
 
-  const transactionsClass = showAll ? "ui yellow button fluid" : "ui yellow button";
+  const transactionsClass = showAll ? "ui olive button fluid" : "ui olive button";
 
-  const expandList = (group.items.length + group.transfers.length) > 3 && !showAll ? (
-    <Link to={`/groups/${group._id}/items`} className="ui brown button">
+  const expandList = transactions.length > 3 && !showAll ? (
+    <Link to={`/groups/${group._id}/items`} className="ui yellow button">
       SHOW ALL
     </Link>
   ) : ''
 
-  const newExpenseLink = showAll ? (
-    <span className="ui fluid olive button">Add a new expense</span>
+  const newExpenseLink = (showAll || transactions.length === 0) ? (
+    <span className="ui fluid yellow button">Add a new expense</span>
     ) : (
     <i className="plus big olive circle icon"></i>
   )

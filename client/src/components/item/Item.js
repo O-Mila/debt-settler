@@ -44,13 +44,17 @@ class Item extends Component {
 		) : ''
 
 		return (
-				<div className="container">
-					<h1 className="centered">{item.name}</h1>
-					<table className="table">
-						{paymentHeader}
-						{paymentList}
-					</table>
-					<div className="ui teal button" 
+				<div className="container h-100">
+					<div className="h-25 d-flex align-items-center justify-content-center">
+						<h1>{item.name}</h1>
+					</div>
+					<div>
+						<table className="table">
+							{paymentHeader}
+							{paymentList}
+						</table>
+					</div>
+					<div className="ui teal button d-flex align-items-center justify-content-center" 
 						onClick={() => window.history.back()}>
 							Go back
 					</div>
