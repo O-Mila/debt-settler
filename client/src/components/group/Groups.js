@@ -17,17 +17,19 @@ class Groups extends Component {
         })
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => window.history.back())
   }
   render() {
     const { groups } = this.state;
     const { index, changeGroup } = this.props
     const showGroup = groups.length ? <ShowGroup {...this.state} index={index} /> : 
-      'You have no groups.'
+      <h1 className="d-flex align-items-center justify-content-center h-25">
+        You have no groups.
+      </h1>
 
     return (
       <div className="container h-100">
-        <div className="ui vertical segment">{showGroup}</div>
+        {showGroup}
         <GroupList {...this.state} changeGroup={changeGroup} />
       </div>
     );

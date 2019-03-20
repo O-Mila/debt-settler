@@ -12,17 +12,18 @@ const TransactionsContent = props => {
 
   const expandList = transactions.length > 3 && !showAll ? (
     <Link to={`/groups/${group._id}/items`} className="ui yellow button">
-      SHOW ALL
+      <div>SHOW ALL</div>
     </Link>
   ) : ''
-
+  const newExpenseClass = (showAll || transactions.length === 0) ? 
+    "ui fluid yellow button" : ''
   const newExpenseLink = (showAll || transactions.length === 0) ? (
-    <span className="ui fluid yellow button">Add a new expense</span>
+    <div>Add a new expense</div>
     ) : (
-    <i className="plus big olive circle icon"></i>
+    <span><i className="plus big olive circle icon"></i></span>
   )
   const newExpense = (
-    <Link to={`/groups/${group._id}/items/new`}>
+    <Link to={`/groups/${group._id}/items/new`} className={newExpenseClass}>
       {newExpenseLink}
     </Link>
   )

@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = props => {
-	const { isLoggedIn } = props;
+	const { isLoggedIn, logOut } = props;
     const navLinks = isLoggedIn ? (
     <div className="ui teal two item inverted menu">
       <Link to='/groups' className="item">Home</Link>
-      <Link to='/logout' className="item">Log out</Link>
+      <div onClick={logOut} className="item pointer">Log out</div>
     </div>
     ) : (
     <div className="ui teal two item inverted menu">

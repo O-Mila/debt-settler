@@ -5,20 +5,20 @@ const PageFour = props => {
 	const itemHeader = (
 		<thead>
 			<tr>
-				<th scope="col">User</th>
-				<th scope="col">Pays</th>
-				<th scope="col">Consumes</th>
+				<th scope="col" className="centered">User</th>
+				<th scope="col" className="centered">Pays</th>
+				<th scope="col" className="centered">Consumes</th>
 			</tr>
 		</thead>	
 	) 
 	const itemBody = (
 		<tbody>
-		{						
+		{	
 			group.members.map((member, i) => {
 				return  <tr key={member._id}>
-							<td>{member.user.username}</td>
-							<td>{paid[i]} {group.currency}</td>
-							<td>{received.amounts[i]} {group.currency}</td>
+							<td className="centered">{member.user.username}</td>
+							<td className="centered">{paid[i]} {group.currency}</td>
+							<td className="centered">{received.amounts[i]} {group.currency}</td>
 						</tr>
 			})
 		}

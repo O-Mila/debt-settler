@@ -45,9 +45,7 @@ class AddItem extends Component {
 				})
 			}
 		})
-		.catch(err => {
-			console.log(err);
-		})
+		.catch(err => window.history.back())
 	}
 	handleNameChange = e => {
     	this.setState({
@@ -141,7 +139,6 @@ class AddItem extends Component {
 				}
 			}
 		})
-		console.log(this.state)
 	}
 	addItem = e => {
 		e.preventDefault()
@@ -156,13 +153,13 @@ class AddItem extends Component {
 				.then(() => {
 					axios.put(`http://localhost:8080/api/groups/${group_id}/debts`)
 					.then(() => window.history.back())
-					.catch(err => console.log(err))
+					.catch(err => window.history.back())
 				})
-				.catch(err => console.log(err))
+				.catch(err => window.history.back())
 			})
-			.catch(err => console.log(err))
+			.catch(err => window.history.back())
 		} else {
-			console.log('Someone has to pay!!!')
+			window.history.back()
 		}
 	}
   	previousPage = () => {

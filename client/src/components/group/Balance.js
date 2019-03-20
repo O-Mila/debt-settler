@@ -2,9 +2,7 @@ import React from 'react';
 
 const Balance = props => {
 	const { members, currency } = props.group
-	console.log('members', members)
 	const sortedMembers = members.sort((a, b) => a.balance < b.balance ? 1 : -1)
-	console.log('sortedMembers', sortedMembers)
 	const color = balance => {
 		if(balance > 0) return 'green'
 		if(balance < 0) return 'red'

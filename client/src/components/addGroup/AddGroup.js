@@ -42,13 +42,12 @@ class AddGroup extends Component {
         this.props.showAlert(response.data, 'warning');        
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => window.history.back())
   }
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
-    console.log(this.state)
   }
   addMember = suggestion => {
     this.setState({

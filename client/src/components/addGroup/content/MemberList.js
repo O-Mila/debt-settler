@@ -7,7 +7,7 @@ const MemberList = props => {
     const memberClass = `ui ${size} teal basic button members`;
 
     return (
-	    <div className="h-50 members">
+	    <div className="members h-25">
 		{
 		    members.map(member => {
 			    return  <div key={member._id} className={memberClass}

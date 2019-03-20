@@ -15,7 +15,7 @@ class Item extends Component {
 				currency: response.data.currency
 			})
 		})
-		.catch(err => console.log(err))
+		.catch(err => window.history.back())
 	}
 
 	render(){
@@ -23,9 +23,9 @@ class Item extends Component {
 		const paymentHeader = (
 			<thead>
 				<tr>
-					<th scope="col">User</th>
-					<th scope="col">Paid</th>
-					<th scope="col">Consumed</th>
+					<th scope="col" className="centered">User</th>
+					<th scope="col" className="centered">Paid</th>
+					<th scope="col" className="centered">Consumed</th>
 				</tr>
 			</thead>
 			) 
@@ -34,9 +34,9 @@ class Item extends Component {
 				{						
 					item.payments.map(payment => {
 						return  <tr key={payment._id}>
-									<td>{payment.user.username}</td>
-									<td>{payment.paid} {currency}</td>
-									<td>{payment.received} {currency}</td>
+									<td className="centered">{payment.user.username}</td>
+									<td className="centered">{payment.paid} {currency}</td>
+									<td className="centered">{payment.received} {currency}</td>
 								</tr>
 					})
 				}
@@ -44,22 +44,22 @@ class Item extends Component {
 		) : ''
 
 		return (
-				<div className="container h-100">
-					<div className="h-25 d-flex align-items-center justify-content-center">
-						<h1>{item.name}</h1>
-					</div>
-					<div>
-						<table className="table">
-							{paymentHeader}
-							{paymentList}
-						</table>
-					</div>
-					<div className="ui teal button d-flex align-items-center justify-content-center" 
-						onClick={() => window.history.back()}>
-							Go back
-					</div>
+			<div className="container h-100">
+				<div className="h-25 d-flex align-items-center justify-content-center">
+					<h1>{item.name}</h1>
 				</div>
-			)
+				<div>
+					<table className="table">
+						{paymentHeader}
+						{paymentList}
+					</table>
+				</div>
+				<div className="ui teal button d-flex align-items-center justify-content-center" 
+					onClick={() => window.history.back()}>
+						Go back
+				</div>
+			</div>
+		)
 	}
 }
 

@@ -21,7 +21,7 @@ class ShowGroup extends Component {
 					group: response.data
 				})
 			})
-			.catch(err => console.log(err));			
+			.catch(err => window.history.back());			
 		}
 	}
 	componentDidUpdate(prevProps){

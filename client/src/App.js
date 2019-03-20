@@ -7,11 +7,11 @@ import AddItem from './components/addItem/AddItem';
 import Item from './components/item/Item';
 import TransactionList from './components/transactions/TransactionList';
 import Login from './components/user/Login';
-import Logout from './components/user/Logout';
 import Register from './components/user/Register';
 import PrivateRoute from './components/PrivateRoute';
 import NotLoggedRoute from './components/NotLoggedRoute';
 import { BrowserRouter, Switch } from 'react-router-dom';
+import axios from 'axios';
 
 class App extends Component {
   constructor(){
@@ -50,16 +50,20 @@ class App extends Component {
       user_id: user_id
     })
   }
-  logOut(message, type){
-    this.showAlert(message, type)
-    this.setState({
-      isLoggedIn: false,
-      username: '',
-      user_id: '',
-      index: 0
-    })
+  logOut(){  
+    axios.get('http://localhost:8080/api/logout')
+      .then(res => {
+        this.setState({
+          isLoggedIn: false,
+          username: '',
+          user_id: '',
+          index: 0
+        })
+        this.showAlert('Successfully signed out', 'info')
+      })
+      .catch(err => this.showAlert('Oops! Something went wrong while logging out', 'danger'))
   }
-  changeGroup = (index) => {
+  changeGroup = index => {
     this.setState({ index: index })
   }
   render() {
@@ -72,11 +76,11 @@ class App extends Component {
 	        		<PrivateRoute {...this.state} exact path="/groups" 
                 render={() => <Groups {...this.state} changeGroup={this.changeGroup} /> } />
 
-	        		<PrivateRoute {...this.state} path="/groups/new" render={() => 
+	        		<PrivateRoute {...this.state} exact path="/groups/new" render={() => 
                 <AddGroup {...this.state} showAlert={this.showAlert} 
                 changeGroup={this.changeGroup} /> } />
               
-              <PrivateRoute {...this.state} path={`/groups/:group_id/items/new`}
+              <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/new`}
                 render={({match}) => <AddItem {...this.state} match={match} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/:item_id`}
@@ -84,16 +88,12 @@ class App extends Component {
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items`}
                 render={({match}) => <TransactionList {...this.state} match={match} /> } />
-
-              <PrivateRoute {...this.state} path="/logout"
-                render={() => <Logout {...this.state} logOut={this.logOut} 
-                showAlert={this.showAlert} />} />
 	        		
-              <NotLoggedRoute {...this.state} path="/(|login)/"
+              <NotLoggedRoute {...this.state} exact path="/(|login)/"
                 render={() => <Login {...this.state} logIn={this.logIn} 
                 showAlert={this.showAlert} />} />
 	        		
-              <NotLoggedRoute {...this.state} path="/register"
+              <NotLoggedRoute {...this.state} exact path="/register"
                 render={() => <Register {...this.state} logIn={this.logIn} 
                 showAlert={this.showAlert} />} />
 	        	</Switch>

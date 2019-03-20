@@ -31,13 +31,10 @@ router.post('/new', (req, res) => {
 	Item.findById(item_id).populate({
 		path: "payments", model: "Payment", 
 		populate: { path: "user", model: "User" }
-	}).exec((err, item) => {
-		if(err) res.json(err)
-		console.log('Item', item)
+	}).exec().then(item => {
 		Group.findById(req.params.group_id)
 		.populate({ path: "members.user", model: "User" })
-		.exec((err, group) => {
-			if(err) res.json(err)
+		.exec().then(group => {
 			group.items.push(item)
 			group.members.forEach(member => {
 				for(let i = 0; i < group.members.length; i++){
@@ -49,17 +46,15 @@ router.post('/new', (req, res) => {
 			})
 			group.save()
 			res.json(group)
-		})
-	})
+		}).catch(err => res.json(err))
+	}).catch(err => res.json(err))
 })
 
 // Retrieve list of items
 router.get('/', (req, res) => {
-	console.log('Item req.params', req.params)
-	Group.findById(req.params.group_id).populate('items').exec((err, group) => {
-		if(err) res.json(err)
-		res.json(group.items)
-	})
+	Group.findById(req.params.group_id).populate('items').exec()
+	.then(group => res.json(group.items))
+	.catch(err => res.json(err))
 })
 
 // Show selected item
@@ -71,8 +66,7 @@ router.get('/:item_id', (req, res) => {
 			path: 'user',
 			model: 'User'
 		}
-	}).exec((err, item) => {
-		if(err) res.json(err)
+	}).exec().then(item => {
 		Group.findById(req.params.group_id)
 		.then(group => {
 			res.json({
@@ -80,8 +74,8 @@ router.get('/:item_id', (req, res) => {
 				item: item
 			})
 		})
-		.catch(err => console.log(err))
-	})
+		.catch(err => res.json(err))
+	}).catch(err => res.json(err))
 })
 
 module.exports = router

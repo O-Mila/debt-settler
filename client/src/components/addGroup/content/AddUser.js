@@ -28,7 +28,7 @@ class AddUser extends Component {
         if(!this.state.search){ 
           this.setState({ loading: false })
         }
-      }).catch(err => console.log(err))      
+      }).catch(err => window.history.back())      
     } else {
       this.setState({ suggestions: [], loading: false })
     }

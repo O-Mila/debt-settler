@@ -34,7 +34,7 @@ class DebtsList extends Component {
 			})
 			transferMade()			
 		})
-		.catch(err => console.log(err))
+		.catch(err => window.history.back())
 	}
 	render(){
 		const { payerIndex, consumerIndex } = this.state

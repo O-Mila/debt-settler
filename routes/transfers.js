@@ -47,17 +47,14 @@ router.post('/new', (req, res) => {
 
 // Retrieve list of transfers
 router.get('/', (req, res) => {
-	console.log('Transfer req.params', req.params)
 	Group.findById(req.params.group_id)
 	.populate({
 		path: "transfers",
 		model: "Transfer",
 		populate: [{ path: "payer", model: "User" },
 				   { path: "receiver", model: "User" }]
-	}).exec((err, group) => {
-		if(err) res.json(err)
-		res.json(group.transfers)
-	})
+	}).exec().then(group => res.json(group.transfers))
+	.catch(err => res.json(err))
 })
 
 module.exports = router

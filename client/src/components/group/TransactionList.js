@@ -15,7 +15,7 @@ class TransactionList extends Component {
           Latest transactions
         </div>
           <div className="ui vertical segment">         
-          <TransactionsContent {...this.state} group={group} />
+            <TransactionsContent {...this.state} group={group} />
           </div>
       </div>
     )
