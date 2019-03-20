@@ -88,8 +88,7 @@ class DebtsList extends Component {
 			<div>
 				<div className="ui horizontal divider">
 					<i className="calculator icon"></i>
-					<span>   </span>
-					Debt Settlement
+					<div className="section-title">Debt Settlement</div>
 				</div>					
 				<div className="ui vertical segment nullpadding">{indebted}</div>
 			</div>

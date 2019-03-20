@@ -27,7 +27,7 @@ class AddGroup extends Component {
   addGroup = e => {
     e.preventDefault()
     const { name, currency, members } = this.state
-    const { changeGroup, user_id } = this.props
+    const { changeGroup, user_id, showAlert } = this.props
     axios.post('http://localhost:8080/api/groups/new', 
       { name, currency, members })
     .then(response => {
@@ -39,7 +39,7 @@ class AddGroup extends Component {
           window.history.back()
         })
       } else {
-        this.props.showAlert(response.data, 'warning');        
+        showAlert(response.data, 'warning');        
       }
     })
     .catch(err => window.history.back())

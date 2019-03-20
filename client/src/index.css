@@ -1,21 +1,28 @@
-#root {
-	height: 90%;
-}
+#root { height: 90%; }
+
+vertical-align { text-align: center; }
+
+.centered { text-align: center; }
+
+.pointer {cursor: pointer;}
+
+.alignment { margin: auto; }
+
+.hidden { visibility: hidden; }
+
+.nullpading { padding: 0; }
+
+form { margin: 5% 0; }
 
 h3 {
 	color: teal;
 	display: inline;
 }
 
-vertical-align {
-	text-align: center;
+div.section-title {
+	display: inline;
+	margin: 0px 0px 0px 5px;
 }
-
-.centered {
-	text-align: center;
-}
-
-.pointer {cursor: pointer;}
 
 .container-fluid {
     padding-right:0;
@@ -31,29 +38,7 @@ vertical-align {
     align-items: center;
 }
 
-.alignment {
-	margin: auto;
-}
-
-form {
-	margin: 5% 0;
-}
-
 .members {
 	margin: 3%;
 	vertical-align: middle;
-}
-
-.nullpading {
-	padding: 0;
-}
-/*
-.title {
-	text-align: center;
-	font-size: 30px;
-	color: teal;
-}
-*/
-.hidden {
-	visibility: hidden;
 }

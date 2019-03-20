@@ -52,9 +52,7 @@ class AddItem extends Component {
       		[e.target.name]: e.target.value
     	})
 	}
-	twoDecimals = amount => {
-		return Math.round(amount * 100)/100
-	}
+	twoDecimals = amount => Math.round(amount * 100)/100
 	handlePrecision = (newAmounts, total) => {
 		var k = 0
 		var totalAmount = newAmounts.reduce((acc, a) => acc + a)
@@ -71,14 +69,6 @@ class AddItem extends Component {
 			k++
 		}
 	}
-	// updateConsumptions = (received, total, consumers) => {
-	// 	return (
-	// 		received.amounts.map((amount, i) => {
-	// 			if(received.benefits[i]) return Math.round(total/consumers*100)/100
-	// 			return 0
-	// 		})
-	// 	)
-	// }
 	handlePaymentsChange = (i, e) => {
 		e.persist()
 		this.setState(state => {
@@ -104,7 +94,6 @@ class AddItem extends Component {
 				if(received.benefits[i]) return this.twoDecimals(total/consumers)
 				return 0
 			})
-			//const newAmounts = this.updateConsumptions(received, total, consumers)
 			this.handlePrecision(newAmounts, total)
 			return {
 				received: { 
@@ -130,7 +119,6 @@ class AddItem extends Component {
 				if(newBenefits[j]) return this.twoDecimals(total/consumers)
 				return 0
 			})
-			//const newAmounts = this.updateConsumptions(received, total, consumers)
 			this.handlePrecision(newAmounts, total)
 			return {
 				received: {
@@ -148,14 +136,18 @@ class AddItem extends Component {
 			axios.post(`http://localhost:8080/api/groups/${group_id}/items`,
 				{name, members: group.members, paid, received: received.amounts, total, group_id})
 			.then(response => {
-				axios.post(`http://localhost:8080/api/groups/${group_id}/items/new`,
-					{ item_id: response.data._id })
-				.then(() => {
-					axios.put(`http://localhost:8080/api/groups/${group_id}/debts`)
-					.then(() => window.history.back())
+				if(response.data.name){
+					axios.post(`http://localhost:8080/api/groups/${group_id}/items/new`,
+						{ item_id: response.data._id })
+					.then(() => {
+						axios.put(`http://localhost:8080/api/groups/${group_id}/debts`)
+						.then(() => window.history.back())
+						.catch(err => window.history.back())
+					})
 					.catch(err => window.history.back())
-				})
-				.catch(err => window.history.back())
+				} else {
+					this.props.showAlert(response.data, 'warning');
+				}
 			})
 			.catch(err => window.history.back())
 		} else {

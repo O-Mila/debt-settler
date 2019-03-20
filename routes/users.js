@@ -1,12 +1,10 @@
 const express = require('express'),
 router 		  = express.Router(),
 User 		  = require('../database/models/user'),
-passport      = require('passport');
+passport      = require('passport'),
+methods		  = require("../methods.js");
 
-// Escape Regular Expressions (used when searching users to add to group)
-function escapeRegex(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
+const { escapeRegex } = methods
 
 // Add a new User to the database and login
 router.post('/register', (req, res) => {

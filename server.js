@@ -3,10 +3,10 @@ express 	   = require("express"),
 bodyParser 	   = require("body-parser"),
 app 		   = express(),
 methodOverride = require("method-override"),
-cors		   = require('cors'),
+cors		   = require("cors"),
 passport	   = require("passport"),
 LocalStrategy  = require("passport-local"),
-session 	   = require('express-session'),
+session 	   = require("express-session"),
 path 		   = require("path");
 
 require("dotenv").config()
@@ -55,6 +55,9 @@ app.use(cors());
 
 // Look for files in client folder
 app.use(express.static(path.join(__dirname, "client", "build")))
+
+// Methods
+//const methods = require("./methods");
 
 // Configure routing
 const userRoutes = require("./routes/users");

@@ -81,7 +81,8 @@ class App extends Component {
                 changeGroup={this.changeGroup} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/new`}
-                render={({match}) => <AddItem {...this.state} match={match} /> } />
+                render={({match}) => <AddItem {...this.state} showAlert={this.showAlert} 
+                match={match} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/:item_id`}
                 render={({match}) => <Item {...this.state} match={match} /> } />

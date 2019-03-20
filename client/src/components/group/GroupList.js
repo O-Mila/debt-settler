@@ -6,8 +6,7 @@ const GroupList = props => {
   const divider = (
     <div className="ui horizontal divider">
       <i className="sliders horizontal icon"></i>
-      <span>     </span>
-      User Groups
+      <div className="section-title">User Groups</div>
     </div>
     )
 	const groupList = groups.length ? (

@@ -12,8 +12,7 @@ const Balance = props => {
 		<div>
 			<div className="ui horizontal divider">
 				<i className="balance scale icon"></i>
-				<span>     </span>
-				Balances
+				<div className="section-title">Balances</div>
 			</div>
   			<div>
 			{

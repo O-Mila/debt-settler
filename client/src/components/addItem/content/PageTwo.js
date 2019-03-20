@@ -1,7 +1,7 @@
 import React from 'react';
 
 const PageTwo = props => {
-		const { group, handlePaymentsChange } = props
+		const { paid, group, handlePaymentsChange } = props
 		const payers = (
 			<div className="h-75">
 				<h1 className="h-50 d-flex align-items-center justify-content-center">Who paid?</h1>
@@ -14,6 +14,7 @@ const PageTwo = props => {
 									<span className="ui big input">
 										<input type='number' placeholder='0.00' name='paid' 
 										min='0' pattern="^\d*(\.\d{0,2})?$" step='0.01'
+										value={paid[i] ? paid[i] : ''}
 										onChange={e => handlePaymentsChange(i, e)} />
 									</span>
 								</div>

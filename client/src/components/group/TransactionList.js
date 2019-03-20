@@ -11,8 +11,7 @@ class TransactionList extends Component {
       <div>
         <div className="ui horizontal divider">
           <i className="coffee icon"></i>
-          <span>     </span>
-          Latest transactions
+          <div className="section-title">Latest transactions</div>
         </div>
           <div className="ui vertical segment">         
             <TransactionsContent {...this.state} group={group} />
