@@ -11,7 +11,7 @@ path 		   = require("path"),
 User 		   = require('./database/models/user');
 
 //Environment variables
-//require("dotenv").config()
+require("dotenv").config()
 
 const secret = process.env.SECRET || "The Speech of the Stars",
 PORT 		 = process.env.PORT || 8080,
