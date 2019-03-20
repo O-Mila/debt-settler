@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const Group = require("../database/models/group");
-const Payment = require("../database/models/payment");
-const User = require("../database/models/user");
-const methods = require("../methods.js");
+const express = require("express"),
+router        = express.Router(),
+Group 		  = require("../database/models/group"),
+Payment 	  = require("../database/models/payment"),
+User 		  = require("../database/models/user"),
+methods 	  = require("../methods.js");
 
 const { findGroup, updateDebts, twoDecimals } = methods;
 

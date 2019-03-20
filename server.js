@@ -7,19 +7,18 @@ cors		   = require("cors"),
 passport	   = require("passport"),
 LocalStrategy  = require("passport-local"),
 session 	   = require("express-session"),
-path 		   = require("path");
+path 		   = require("path"),
+User 		   = require('./database/models/user');
 
+//Environment variables
 require("dotenv").config()
 
 const secret = process.env.SECRET || "The Speech of the Stars",
 PORT 		 = process.env.PORT || 8080,
 url 		 = process.env.DATABASEURL || "mongodb://localhost/debt-settler";
 
+// Connect database
 mongoose.connect(url, { useNewUrlParser: true });
-
-const Group = require('./database/models/group');
-const User = require('./database/models/user');
-const Item = require('./database/models/item');
 
 // Configure body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,10 +59,10 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 //const methods = require("./methods");
 
 // Configure routing
-const userRoutes = require("./routes/users");
-const groupRoutes = require("./routes/groups");
-const itemRoutes = require("./routes/items");
-const transferRoutes = require("./routes/transfers");
+const userRoutes = require("./routes/users"),
+groupRoutes      = require("./routes/groups"),
+itemRoutes       = require("./routes/items"),
+transferRoutes   = require("./routes/transfers");
 
 app.use("/api", userRoutes);
 app.use("/api/groups", groupRoutes);

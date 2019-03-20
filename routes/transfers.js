@@ -1,10 +1,10 @@
-const express = require("express");
-const Group = require("../database/models/group");
-const User = require("../database/models/user");
-const Payment = require("../database/models/payment");
-const Transfer = require("../database/models/transfer");
-const router = express.Router({mergeParams: true});
-const methods = require("../methods.js");
+const express = require("express"),
+Group 		  = require("../database/models/group"),
+User  		  = require("../database/models/user"),
+Payment       = require("../database/models/payment"),
+Transfer 	  = require("../database/models/transfer"),
+router 		  = express.Router({mergeParams: true}),
+methods 	  = require("../methods.js");
 
 const { findGroup, twoDecimals } = methods;
 

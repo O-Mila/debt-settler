@@ -1,15 +1,15 @@
-const express = require("express");
-const Group = require("../database/models/group");
-const User = require("../database/models/user");
-const Item = require("../database/models/item");
-const Payment = require("../database/models/payment");
-const router = express.Router({mergeParams: true});
-const methods = require("../methods.js");
+const express = require("express"),
+Group 		  = require("../database/models/group"),
+User 		  = require("../database/models/user"),
+Item 		  = require("../database/models/item"),
+Payment 	  = require("../database/models/payment"),
+router 		  = express.Router({mergeParams: true}),
+methods 	  = require("../methods.js");
 
 const { findGroup, findItem, twoDecimals } = methods;
 
 // Create item
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
 	const { name, members, group_id } = req.body;
 	findGroup(group_id).then(group => {
 		const itemExists = group.items.some(item => item.name === name)
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
 })
 
 // Add item to group object
-router.post('/new', (req, res) => {
+router.post("/new", (req, res) => {
 	const { item_id } = req.body
 	const { group_id } = req.params
 	findItem(item_id).then(item => {
@@ -56,14 +56,14 @@ router.post('/new', (req, res) => {
 })
 
 // Retrieve list of items
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
 	findGroup(req.params.group_id)
 	.then(group => res.json(group.items))
 	.catch(err => res.json(err))
 })
 
 // Show selected item
-router.get('/:item_id', (req, res) => {
+router.get("/:item_id", (req, res) => {
 	const { group_id, item_id } = req.params
 	findItem(item_id).then(item => {
 		findGroup(group_id)

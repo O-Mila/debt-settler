@@ -1,8 +1,8 @@
-const Group = require("./database/models/group");
-const Payment = require("./database/models/payment");
-const User = require("./database/models/user");
-const Transfer = require("./database/models/transfer");
-const Item = require("./database/models/item");
+const Group = require("./database/models/group"),
+Payment     = require("./database/models/payment"),
+User        = require("./database/models/user"),
+Transfer    = require("./database/models/transfer"),
+Item        = require("./database/models/item");
 
 module.exports = {
 
