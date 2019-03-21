@@ -15,8 +15,8 @@ require("dotenv").config()
 
 const secret = process.env.SECRET || "The Speech of the Stars",
 PORT 		 = process.env.PORT || 8080,
-url 		 = process.env.DATABASEURL || "mongodb://localhost/debt-settler";
-
+//url 		 = process.env.DATABASEURL || "mongodb://localhost/debt-settler";
+url          = "mongodb://oriolmilajansa:0112omj8986@ds341605.mlab.com:41605/debt-settler"
 // Connect database
 mongoose.connect(url, { useNewUrlParser: true });
 
