@@ -66,6 +66,11 @@ class App extends Component {
   changeGroup = index => {
     this.setState({ index: index })
   }
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
   render() {
     return (
     	<BrowserRouter>
