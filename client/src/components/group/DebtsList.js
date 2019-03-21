@@ -23,9 +23,9 @@ class DebtsList extends Component {
 		e.preventDefault()
 		const { amount } = this.state
 		const { group_id, transferMade } = this.props
-		axios.post(`http://localhost:8080/api/groups/${group_id}/transfers/new`, 
+		axios.post(`/api/groups/${group_id}/transfers/new`, 
 			{ payer_id, receiver_id, amount })
-		.then(() => axios.put(`http://localhost:8080/api/groups/${group_id}/debts`))
+		.then(() => axios.put(`/api/groups/${group_id}/debts`))
 		.then(() => {
 			this.setState({
 				payerIndex: '',

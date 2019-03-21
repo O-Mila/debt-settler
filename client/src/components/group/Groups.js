@@ -36,4 +36,4 @@ class Groups extends Component {
   }
 }
 
-export default Groups;s
+export default Groups;
