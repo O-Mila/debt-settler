@@ -9,7 +9,7 @@ class Groups extends Component {
   }
   componentDidMount(){
     const { user_id } = this.props
-    axios.get(`http://localhost:8080/api/${user_id}/groups`)
+    axios.get(`/api/${user_id}/groups`)
     .then(response => {
       if(response.data.groups){
         this.setState({
@@ -17,7 +17,7 @@ class Groups extends Component {
         })
       }
     })
-    .catch(err => window.history.back())
+    //.catch(err => window.history.back())
   }
   render() {
     const { groups } = this.state;
@@ -36,4 +36,4 @@ class Groups extends Component {
   }
 }
 
-export default Groups;
+export default Groups;s

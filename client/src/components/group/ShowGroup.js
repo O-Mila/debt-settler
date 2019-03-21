@@ -15,13 +15,13 @@ class ShowGroup extends Component {
 	componentDidMount(){
 		const { groups, index } = this.props
 		if(groups.length){
-			axios.get(`http://localhost:8080/api/groups/${groups[index]._id}`)
+			axios.get(`/api/groups/${groups[index]._id}`)
 			.then(response => {
 				this.setState({
 					group: response.data
 				})
 			})
-			.catch(err => window.history.back());			
+			//.catch(err => window.history.back());			
 		}
 	}
 	componentDidUpdate(prevProps){
