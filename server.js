@@ -13,9 +13,9 @@ User 		   = require('./database/models/user');
 //Environment variables
 require("dotenv").config()
 
-const secret = process.env.SECRET || "The Speech of the Stars",
-PORT 		 = process.env.PORT || 8080,
-url 		 = process.env.DATABASEURL || "mongodb://localhost/debt-settler";
+const PORT = 8080,
+secret     = process.env.SECRET || "The Speech of the Stars",
+url 	   = process.env.DATABASEURL || "mongodb://localhost/debt-settler";
 
 // Connect database
 mongoose.connect(url, { useNewUrlParser: true });
