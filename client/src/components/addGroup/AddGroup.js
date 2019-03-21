@@ -36,7 +36,7 @@ class AddGroup extends Component {
         .then(response => {
           const index = response.data.map(user => user._id).indexOf(user_id)
           changeGroup(response.data[index].groups.length - 1)
-          //window.history.back()
+          window.history.back()
         })
       } else {
         showAlert(response.data, 'warning');        
@@ -80,7 +80,7 @@ class AddGroup extends Component {
 
   render() {
     if(this.state.page === 0){
-      //window.history.back()
+      window.history.back()
     }
     return (
       <div className="row h-75">
