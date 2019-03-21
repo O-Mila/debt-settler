@@ -43,12 +43,12 @@ class App extends Component {
     }), 1000)
   }
   logIn(username, user_id, message, type){
-    this.showAlert(message, type)
     this.setState({
       isLoggedIn: true,
       username: username,
       user_id: user_id
     })
+    this.showAlert(message, type)
   }
   logOut(){  
     axios.get('http://localhost:8080/api/logout')
