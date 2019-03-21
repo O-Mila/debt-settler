@@ -16,7 +16,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8080",
+  //"proxy": "http://localhost:8080",
+  "proxy": "https://debt-settler.herokuapp.com",
   "eslintConfig": {
     "extends": "react-app"
   },
