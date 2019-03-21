@@ -50,13 +50,10 @@ app.use((req, res, next) => {
 });
 
 // Allow Cross-Origin-Resource-Sharing
-//app.use(cors());
+app.use(cors());
 
 // Look for files in client folder
 app.use(express.static(path.join(__dirname, "client", "build")))
-
-// Methods
-//const methods = require("./methods");
 
 // Configure routing
 const userRoutes = require("./routes/users"),
