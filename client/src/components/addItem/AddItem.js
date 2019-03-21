@@ -28,7 +28,7 @@ class AddItem extends Component {
 	}
 	componentDidMount(){
 		const { group_id } = this.props.match.params;
-		axios.get(`http://localhost:8080/api/groups/${group_id}`)
+		axios.get(`/api/groups/${group_id}`)
 		.then(response => {
 			this.setState({
 				group: response.data
@@ -45,7 +45,7 @@ class AddItem extends Component {
 				})
 			}
 		})
-		.catch(err => window.history.back())
+		.catch(err => this.props.logOut())
 	}
 	handleNameChange = e => {
     	this.setState({
@@ -133,14 +133,14 @@ class AddItem extends Component {
 		const { name, group, paid, received, total } = this.state
 		if(total > 0){
 			const { group_id } = this.props.match.params
-			axios.post(`http://localhost:8080/api/groups/${group_id}/items`,
+			axios.post(`/api/groups/${group_id}/items`,
 				{name, members: group.members, paid, received: received.amounts, total, group_id})
 			.then(response => {
 				if(response.data.name){
-					axios.post(`http://localhost:8080/api/groups/${group_id}/items/new`,
+					axios.post(`/api/groups/${group_id}/items/new`,
 						{ item_id: response.data._id })
 					.then(() => {
-						axios.put(`http://localhost:8080/api/groups/${group_id}/debts`)
+						axios.put(`/api/groups/${group_id}/debts`)
 						.then(() => window.history.back())
 						.catch(err => window.history.back())
 					})

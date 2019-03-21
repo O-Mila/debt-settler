@@ -22,7 +22,7 @@ class DebtsList extends Component {
 	handleSubmit = (e, payer_id, receiver_id) => {
 		e.preventDefault()
 		const { amount } = this.state
-		const { group_id, transferMade } = this.props
+		const { group_id, transferMade, logOut } = this.props
 		axios.post(`/api/groups/${group_id}/transfers/new`, 
 			{ payer_id, receiver_id, amount })
 		.then(() => axios.put(`/api/groups/${group_id}/debts`))
@@ -34,7 +34,7 @@ class DebtsList extends Component {
 			})
 			transferMade()			
 		})
-		.catch(err => window.history.back())
+		.catch(err => logOut())
 	}
 	render(){
 		const { payerIndex, consumerIndex } = this.state

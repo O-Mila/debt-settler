@@ -19,7 +19,7 @@ class TransactionList extends Component {
   }
   componentDidMount(){
     const { group_id } = this.props.match.params;
-    axios.get(`http://localhost:8080/api/groups/${group_id}`)
+    axios.get(`/api/groups/${group_id}`)
     .then(response => {
       const group = response.data
       const transfersNumber = group.items.length + group.transfers.length;

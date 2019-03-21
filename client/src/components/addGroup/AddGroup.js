@@ -27,22 +27,22 @@ class AddGroup extends Component {
   addGroup = e => {
     e.preventDefault()
     const { name, currency, members } = this.state
-    const { changeGroup, user_id, showAlert } = this.props
-    axios.post('http://localhost:8080/api/groups/new', 
+    const { changeGroup, user_id, showAlert, logOut } = this.props
+    axios.post('/api/groups/new', 
       { name, currency, members })
     .then(response => {
       if(response.data.name){
-        axios.post(`http://localhost:8080/api/groups/new/${response.data._id}`)      
+        axios.post(`/api/groups/new/${response.data._id}`)      
         .then(response => {
           const index = response.data.map(user => user._id).indexOf(user_id)
           changeGroup(response.data[index].groups.length - 1)
-          window.history.back()
+          //window.history.back()
         })
       } else {
         showAlert(response.data, 'warning');        
       }
     })
-    .catch(err => window.history.back())
+    .catch(err => logOut())
   }
   handleChange = e => {
     this.setState({
@@ -80,7 +80,7 @@ class AddGroup extends Component {
 
   render() {
     if(this.state.page === 0){
-      window.history.back()
+      //window.history.back()
     }
     return (
       <div className="row h-75">

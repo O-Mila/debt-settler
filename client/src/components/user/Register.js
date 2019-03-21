@@ -20,11 +20,10 @@ class Register extends Component {
 		}).then(res => {
 			if(res.data.username){
 				this.props.logIn(res.data.username, res.data._id, 'Successfully signed in', 'success')
-				window.history.back();
 			} else {
 				this.props.showAlert(res.data, 'warning');
 			}
-		}).catch(err => console.log(err))
+		}).catch(err => this.props.showAlert('Oops, there was an error!', 'danger'))
 	}
 	render(){
 		return (

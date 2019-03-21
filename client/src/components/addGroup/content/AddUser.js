@@ -18,7 +18,7 @@ class AddUser extends Component {
     this.setState({ search: this.refs.search.value })
     if(this.state.search.length > 2){
       this.setState({ loading: true })
-      axios.post('http://localhost:8080/api/users',
+      axios.post('/api/users',
         { search: this.state.search, members: this.props.members })
       .then(response => {
         this.setState({
@@ -28,7 +28,7 @@ class AddUser extends Component {
         if(!this.state.search){ 
           this.setState({ loading: false })
         }
-      }).catch(err => window.history.back())      
+      })      
     } else {
       this.setState({ suggestions: [], loading: false })
     }

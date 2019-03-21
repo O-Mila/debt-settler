@@ -13,7 +13,7 @@ class ShowGroup extends Component {
 		this.transferMade = this.transferMade.bind(this)
 	}
 	componentDidMount(){
-		const { groups, index } = this.props
+		const { groups, index, logOut } = this.props
 		if(groups.length){
 			axios.get(`/api/groups/${groups[index]._id}`)
 			.then(response => {
@@ -21,7 +21,7 @@ class ShowGroup extends Component {
 					group: response.data
 				})
 			})
-			//.catch(err => window.history.back());			
+			.catch(err => logOut())
 		}
 	}
 	componentDidUpdate(prevProps){
@@ -35,7 +35,7 @@ class ShowGroup extends Component {
 	render(){
 		const { group } = this.state;
 		const balance = group.members ? <Balance {...this.state} /> : ''
-		const debtsList = group.members ?	<DebtsList {...this.state}
+		const debtsList = group.members ?	<DebtsList {...this.state} {...this.props}
 			transferMade={this.transferMade} group_id={group._id} /> : ''
 		const transactionList = group._id ? <TransactionList {...this.state} /> : ''
 		return (

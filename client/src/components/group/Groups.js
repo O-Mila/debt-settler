@@ -8,7 +8,7 @@ class Groups extends Component {
 	  groups: []
   }
   componentDidMount(){
-    const { user_id } = this.props
+    const { user_id, showAlert, logOut } = this.props
     axios.get(`/api/${user_id}/groups`)
     .then(response => {
       if(response.data.groups){
@@ -17,12 +17,12 @@ class Groups extends Component {
         })
       }
     })
-    //.catch(err => window.history.back())
+    .catch(err => logOut())
   }
   render() {
     const { groups } = this.state;
     const { index, changeGroup } = this.props
-    const showGroup = groups.length ? <ShowGroup {...this.state} index={index} /> : 
+    const showGroup = groups.length ? <ShowGroup {...this.state} {...this.props} index={index} /> : 
       <h1 className="d-flex align-items-center justify-content-center h-25">
         You have no groups.
       </h1>

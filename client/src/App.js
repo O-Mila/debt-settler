@@ -51,7 +51,7 @@ class App extends Component {
     this.showAlert(message, type)
   }
   logOut(){  
-    axios.get('http://localhost:8080/api/logout')
+    axios.get('/api/logout')
       .then(res => {
         this.setState({
           isLoggedIn: false,
@@ -66,11 +66,6 @@ class App extends Component {
   changeGroup = index => {
     this.setState({ index: index })
   }
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
   render() {
     return (
     	<BrowserRouter>
@@ -79,18 +74,19 @@ class App extends Component {
             <Alert {...this.state} />
 	        	<Switch>
 	        		<PrivateRoute {...this.state} exact path="/groups" 
-                render={() => <Groups {...this.state} changeGroup={this.changeGroup} /> } />
+                render={() => <Groups {...this.state} showAlert={this.showAlert}
+                logOut={this.logOut} changeGroup={this.changeGroup} /> } />
 
 	        		<PrivateRoute {...this.state} exact path="/groups/new" render={() => 
                 <AddGroup {...this.state} showAlert={this.showAlert} 
-                changeGroup={this.changeGroup} /> } />
+                logOut={this.logOut} changeGroup={this.changeGroup} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/new`}
                 render={({match}) => <AddItem {...this.state} showAlert={this.showAlert} 
-                match={match} /> } />
+                logOut={this.logOut} match={match} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/:item_id`}
-                render={({match}) => <Item {...this.state} match={match} /> } />
+                render={({match}) => <Item {...this.state} logOut={this.logOut} match={match} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items`}
                 render={({match}) => <TransactionList {...this.state} match={match} /> } />

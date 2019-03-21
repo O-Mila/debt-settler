@@ -8,14 +8,14 @@ class Item extends Component {
 	}
 	componentDidMount(){
 		const { group_id, item_id } = this.props.match.params
-		axios.get(`http://localhost:8080/api/groups/${group_id}/items/${item_id}`)
+		axios.get(`/api/groups/${group_id}/items/${item_id}`)
 		.then(response => {
 			this.setState({
 				item: response.data.item,
 				currency: response.data.currency
 			})
 		})
-		.catch(err => window.history.back())
+		.catch(err => this.props.logOut())
 	}
 
 	render(){
