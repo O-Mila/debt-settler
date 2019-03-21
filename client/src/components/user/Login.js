@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import axios from 'axios';
-import { domain } from "../../actions/index.js"
+//import { domain } from "../../actions/index.js"
 
 class Login extends Component {
 	state = {
@@ -16,7 +16,7 @@ class Login extends Component {
 	}
 	handleSubmit = e => {
 		e.preventDefault();
-		axios.post(`${domain}/api/login`, {
+		axios.post('/api/login', {
 			username: this.state.username,
 			password: this.state.password
 		}).then(res => {
