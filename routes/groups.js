@@ -56,8 +56,8 @@ router.put("/:group_id", (req, res) => {
 		findUsersByName(oldUsernames).then(oldUsers => {
 			const groupExistsOld = oldUsers.some(user => 
 				user.groups.some(group => group.name === name && !group._id.equals(group_id)))
-			if(groupExistsNew || groupExistsOld) {
-				res.send("This group name already exists in some member's account");
+			if(groupExistsNew || groupExistsOld || name.length < 4) {
+				res.send("This group name is invalid");
 			} else {
 				const newMembers = createMembers(newUsers)
 				findGroup(group_id).then(group => {
