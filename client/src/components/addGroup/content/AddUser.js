@@ -28,10 +28,9 @@ class AddUser extends Component {
         if(!this.state.search){ 
           this.setState({ loading: false })
         }
-      }).catch(err => window.history.back())      
-    } else {
-      this.setState({ suggestions: [], loading: false })
-    }
+      })
+      //.catch(err => window.history.back())
+    } else this.setState({ suggestions: [], loading: false })
   }
   deleteSuggestions = () => {
     this.setState({
