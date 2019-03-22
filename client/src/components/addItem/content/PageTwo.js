@@ -11,7 +11,10 @@ const PageTwo = props => {
 						return  <div key={member.user._id}>
 									<span><h3>{member.user.username}</h3></span>
 									<span>     </span>
-									<span className="ui big input">
+									<span className="ui big right labeled input">
+										<label for="amount" className="ui teal label">
+											{group.currency}
+										</label>
 										<input type='number' placeholder='0.00' name='paid' 
 										min='0' pattern="^\d*(\.\d{0,2})?$" step='0.01'
 										value={paid[i] ? paid[i] : ''}

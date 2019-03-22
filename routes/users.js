@@ -4,7 +4,7 @@ User 		  = require('../database/models/user'),
 passport      = require('passport'),
 methods		  = require("../methods.js");
 
-const { escapeRegex } = methods
+const { escapeRegex, findUsersByName } = methods
 
 // Add a new User to the database and login
 router.post('/register', (req, res) => {
@@ -27,7 +27,7 @@ router.post('/register', (req, res) => {
 // Login registered account
 router.post('/login', passport.authenticate('local'), (req, res) => {
 	const { username } = req.body;
-	User.find({ username: username })
+	findUsersByName(username)
 	.then(user => res.json(user))
 	.catch(err => res.json(err))
 })
@@ -49,7 +49,7 @@ router.get("/:user_id/groups", (req, res) => {
 router.post('/users', (req, res) => {
 	const { members, search } = req.body
 	const regex = new RegExp(escapeRegex(search), 'gi');
-	User.find({ username: regex })
+	findUsersByName(regex)
 	.then(foundUsers => {
 		const filteredUsers = (
 			foundUsers.filter((user) => {

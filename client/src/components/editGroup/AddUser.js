@@ -18,7 +18,7 @@ class AddUser extends Component {
     this.setState({ search: this.refs.search.value })
     if(this.state.search.length > 2){
       this.setState({ loading: true })
-      axios.post('http://localhost:8080/api/users',
+      axios.post('/api/users',
         { search: this.state.search, members: this.props.members })
       .then(response => {
         this.setState({
@@ -28,7 +28,7 @@ class AddUser extends Component {
         if(!this.state.search){ 
           this.setState({ loading: false })
         }
-      }).catch(err => window.history.back())      
+      })      
     } else {
       this.setState({ suggestions: [], loading: false })
     }
@@ -46,13 +46,13 @@ class AddUser extends Component {
     const isLoading = loading ? 'loading' : ''
 
     return (
-          <div className={`ui fluid category ${isLoading} search w-100 h-50 centered`} >
+          <div className={`ui fluid category ${isLoading} search w-100 h-25 centered`} >
             <div className="ui icon input w-100 centered">
               <input className="ui huge input prompt" type='text' onChange={this.searchUser} 
                 placeholder="Add user..." name='search' ref='search' />
               <i onClick={this.searchUser} className="search icon"></i>
             </div>
-            <SuggestionsList {...this.state} {...this.props} 
+            <SuggestionsList {...this.state} {...this.props}
               deleteSuggestions={this.deleteSuggestions} />
           </div>
       )

@@ -5,22 +5,21 @@ Payment 	  = require("../database/models/payment"),
 User 		  = require("../database/models/user"),
 methods 	  = require("../methods.js");
 
-const { findGroup, updateDebts, twoDecimals } = methods;
+const { findGroup, findUsersByName, createMembers, updateDebts, twoDecimals } = methods;
 
 // Add new group
 router.post("/new", (req, res) => {
 	const { name, currency, members } = req.body;
 	const usernames = members.map(member => member.username);
-	User.find({ username: usernames }).populate("groups").exec()
+	findUsersByName(usernames)
 	.then(users => {
 		const groupExists = users.some(user => user.groups.some(group => group.name === name))
 		if(groupExists) res.send("This group name already exists in some member's account");
 		else {
-			const groupMembers = users.map(user => {
-				return { user, balance: 0, debts: [] }
-			})
-			const date = Date.now()
-			Group.create({ name: name, currency: currency, members: groupMembers, date: date })
+			const groupMembers = createMembers(users)
+			const dateCreated = Date.now()
+			Group.create({ name: name, currency: currency, 
+				members: groupMembers, dateCreated: dateCreated })
 			.then(newGroup => res.json(newGroup))
 			.catch(err => res.json(err))		
 		}
@@ -32,7 +31,7 @@ router.post("/new", (req, res) => {
 router.post("/new/:group_id", (req, res) => {
 	findGroup(req.params.group_id).then(group => {
 		const usernames = group.members.map(member => member.user.username);
-		User.find({ username: usernames }) 
+		findUsersByName(usernames)
 		.then(users => {
 			users.forEach(user => {
 				user.groups.push(group);
@@ -43,6 +42,34 @@ router.post("/new/:group_id", (req, res) => {
 		.catch(err => res.json(err))
 	})
 	.catch(err => res.json(err))
+})
+
+// Edit group
+router.put("/:group_id", (req, res) => {
+	const { name, oldMembers } = req.body;
+	const { group_id } = req.params;
+	const newUsernames = req.body.newMembers.map(newMember => newMember.username);
+	findUsersByName(newUsernames).then(newUsers => {
+		const groupExistsNew = newUsers.some(user => 
+			user.groups.some(group => group.name === name))
+		const oldUsernames = oldMembers.map(member => member.user.username)
+		findUsersByName(oldUsernames).then(oldUsers => {
+			const groupExistsOld = oldUsers.some(user => 
+				user.groups.some(group => group.name === name && !group._id.equals(group_id)))
+			if(groupExistsNew || groupExistsOld) {
+				res.send("This group name already exists in some member's account");
+			} else {
+				const newMembers = createMembers(newUsers)
+				findGroup(group_id).then(group => {
+					group.members = [...oldMembers, ...newMembers];
+					group.name = name;
+					group.dateModified = Date.now()
+					group.save()
+					res.json(group)
+				})
+			}
+		})
+	})
 })
 
 // Update group debts

@@ -37,6 +37,19 @@ module.exports = {
 			}).exec()
 	},
 
+	// Find users by username and populate
+	findUsersByName: async usernames => {
+		return await User.find({ username: usernames }).populate("groups").exec()
+	},
+
+	// Create members
+	createMembers: users => {
+		const members = users.map(user => {
+			return { user, balance: 0, debts: [] }
+		})
+		return members
+	},
+
 	// Update debts
 	updateDebts: group => {
 		const { twoDecimals } = module.exports

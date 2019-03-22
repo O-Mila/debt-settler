@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Alert from './components/Alert';
 import Groups from './components/group/Groups';
 import AddGroup from './components/addGroup/AddGroup';
+import EditGroup from './components/editGroup/EditGroup';
 import AddItem from './components/addItem/AddItem';
 import Item from './components/item/Item';
 import TransactionList from './components/transactions/TransactionList';
@@ -40,7 +41,7 @@ class App extends Component {
         message: '',
         type: ''
       }
-    }), 1000)
+    }), 1500)
   }
   logIn(username, user_id, message, type){
     this.setState({
@@ -61,7 +62,7 @@ class App extends Component {
         })
         this.showAlert('Successfully signed out', 'info')
       })
-      .catch(err => this.showAlert('Oops! Something went wrong while logging out', 'danger'))
+      .catch(err => this.showAlert('Oops! Something went wrong', 'danger'))
   }
   changeGroup = index => {
     this.setState({ index: index })
@@ -80,13 +81,18 @@ class App extends Component {
 	        		<PrivateRoute {...this.state} exact path="/groups/new" render={() => 
                 <AddGroup {...this.state} showAlert={this.showAlert} 
                 logOut={this.logOut} changeGroup={this.changeGroup} /> } />
+
+              <PrivateRoute {...this.state} exact path="/groups/:group_id/edit" 
+                render={({match}) => <EditGroup {...this.state} 
+                showAlert={this.showAlert} match={match} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/new`}
                 render={({match}) => <AddItem {...this.state} showAlert={this.showAlert} 
                 logOut={this.logOut} match={match} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items/:item_id`}
-                render={({match}) => <Item {...this.state} logOut={this.logOut} match={match} /> } />
+                render={({match}) => <Item {...this.state} logOut={this.logOut} 
+                match={match} /> } />
               
               <PrivateRoute {...this.state} exact path={`/groups/:group_id/items`}
                 render={({match}) => <TransactionList {...this.state} match={match} /> } />

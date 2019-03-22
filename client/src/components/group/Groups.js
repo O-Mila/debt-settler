@@ -8,7 +8,7 @@ class Groups extends Component {
 	  groups: []
   }
   componentDidMount(){
-    const { user_id, showAlert, logOut } = this.props
+    const { user_id, logOut } = this.props
     axios.get(`/api/${user_id}/groups`)
     .then(response => {
       if(response.data.groups){

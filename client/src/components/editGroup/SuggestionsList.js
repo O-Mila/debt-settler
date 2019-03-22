@@ -7,7 +7,7 @@ const SuggestionsList = props => {
       <div>
         {
           suggestions.map(suggestion => {
-            return  <div key={suggestion._id} className="fluid big ui basic button" 
+            return  <div key={suggestion._id} className="fluid big ui button" 
                       onClick={() => { addMember(suggestion); deleteSuggestions() } }>
                         {suggestion.username}                        
                     </div>

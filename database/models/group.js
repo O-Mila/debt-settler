@@ -29,7 +29,8 @@ const GroupSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Transfer"
 	}],
-	date: { type: Date, default: Date.now }
+	dateCreated: { type: Date, default: Date.now },
+	dateModified: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Group", GroupSchema);

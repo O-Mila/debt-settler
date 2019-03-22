@@ -1,7 +1,5 @@
 #root { height: 90%; }
 
-vertical-align { text-align: center; }
-
 .centered { text-align: center; }
 
 .pointer {cursor: pointer;}
@@ -19,9 +17,14 @@ h3 {
 	display: inline;
 }
 
-div.section-title {
+.section-title {
 	display: inline;
 	margin: 0px 0px 0px 5px;
+}
+
+.more-margin {
+	display: inline;
+	margin: 0px 0px 0px 35px;
 }
 
 .container-fluid {

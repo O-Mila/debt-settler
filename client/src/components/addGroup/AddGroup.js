@@ -32,7 +32,7 @@ class AddGroup extends Component {
       { name, currency, members })
     .then(response => {
       if(response.data.name){
-        axios.post(`/api/groups/new/${response.data._id}`)      
+        axios.post(`/api/groups/new/${response.data._id}`)
         .then(response => {
           const index = response.data.map(user => user._id).indexOf(user_id)
           changeGroup(response.data[index].groups.length - 1)

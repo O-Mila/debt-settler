@@ -3,11 +3,11 @@ import React from 'react';
 const MemberList = props => {
     
     const { members, deleteMember } = props;
-    const size = members.length > 8 ? 'medium' : 'big';
-    const memberClass = `ui ${size} teal basic button members`;
+    const fluid = members.length > 3 ? '' : 'fluid';
+    const memberClass = `ui big ${fluid} teal basic button members`;
 
     return (
-	    <div className="members h-25">
+	    <div className='members'>
 		{
 		    members.map(member => {
 			    return  <div key={member._id} className={memberClass}

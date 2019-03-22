@@ -3,6 +3,7 @@ import axios from "axios";
 import DebtsList from "./DebtsList";
 import TransactionList from "./TransactionList";
 import Balance from "./Balance";
+import { Link } from 'react-router-dom';
 
 class ShowGroup extends Component {
 	constructor(props){
@@ -42,6 +43,9 @@ class ShowGroup extends Component {
 			<div>
 				<h1 className="d-flex align-items-center justify-content-center h-25">
 					{group.name}
+					<Link to={`groups/${group._id}/edit`} className="ui yellow button more-margin">
+						Edit Group
+					</Link>
 				</h1>
 				<div>{balance}</div>
 				<div>{debtsList}</div>
