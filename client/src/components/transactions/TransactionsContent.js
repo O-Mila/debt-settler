@@ -36,7 +36,7 @@ const TransactionsContent = props => {
         </Link>
 
       ) : (
-        <div key={transaction._id} className={transactionsClass}>
+        <div key={transaction._id} className={`${transactionsClass} disabled`}>
             {`${transaction.payer.username} 
             paid ${transaction.amount} ${group.currency}
             to ${transaction.receiver.username}`}

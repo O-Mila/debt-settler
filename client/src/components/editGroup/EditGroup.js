@@ -3,6 +3,7 @@ import axios from "axios";
 import GroupName from "./GroupName";
 import MemberList from "./MemberList";
 import AddUser from "./AddUser";
+import Alert from "../shared/Alert";
 import { Link } from 'react-router-dom';
 
 class EditGroup extends Component {
@@ -13,8 +14,12 @@ class EditGroup extends Component {
   			name: '',
   			oldMembers: [],
   			newMembers: [],
-  			deletedMembers: []
-		}
+  			deletedMembers: [],
+        alert: {
+          message: '',
+          type: ''
+        }
+		  }
     	this.editGroup = this.editGroup.bind(this)
     	this.handleChange = this.handleChange.bind(this)
     	this.addNewMember = this.addNewMember.bind(this)
@@ -34,6 +39,17 @@ class EditGroup extends Component {
 		  })
 		  .catch(err => console.log(err))
 	  }
+    showAlert(message, type){
+      this.setState({
+        alert: { message: message, type: type }
+      })
+      setTimeout(() => this.setState({
+        alert: {
+          message: '',
+          type: ''
+        }
+      }), 1500)
+    }
   	handleChange = e => {
     	this.setState({
       		[e.target.name]: e.target.value
@@ -57,7 +73,6 @@ class EditGroup extends Component {
     }
   	deleteOldMember = e => {
     	const { oldMembers } = this.state;
-    	const { showAlert } = this.props;
     	const index = oldMembers.findIndex(oldMember => 
     		oldMember.user.username === e.currentTarget.textContent);
     	const deletedMember = oldMembers[index]
@@ -68,7 +83,7 @@ class EditGroup extends Component {
       			oldMembers: oldMembers,
       			deletedMembers: [...this.state.deletedMembers, deletedMember]
       		})
-      	} else showAlert("You cannot delete a user who has debts to settle", 'warning')
+      	} else this.showAlert("You cannot delete a user who has debts to settle", 'warning')
     }
     deleteNewMember = e => {
     	const { newMembers } = this.state;
@@ -79,14 +94,13 @@ class EditGroup extends Component {
     }
 	editGroup(){
 		const { group_id } = this.props.match.params
-    const { showAlert } = this.props
     const { oldMembers, newMembers, deletedMembers, name } = this.state
 		axios.put(`/api/groups/${group_id}`, 
       { oldMembers, newMembers, deletedMembers, name })
     .then(response => {
       console.log(response)
       if(response.data.name) window.history.back()
-      else showAlert(response.data, 'warning')
+      else this.showAlert(response.data, 'warning')
     })
 	}
 	render(){
@@ -95,6 +109,7 @@ class EditGroup extends Component {
     const deletedUsers = deletedMembers ? deletedMembers.map(member => member.user) : ''
 		return (
 			<div className="container h-75">
+        <Alert {...this.state} />
         <form>
     			<GroupName {...this.state} handleChange={this.handleChange} />
     			<MemberList {...this.state} addNewMember={this.addNewMember} 

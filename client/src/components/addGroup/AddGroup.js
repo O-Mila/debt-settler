@@ -3,6 +3,7 @@ import AddGroupContent from "./content/AddGroupContent";
 import LeftArrow from "../shared/LeftArrow";
 import RightArrow from "./RightArrow";
 import PagePoints from "../shared/PagePoints";
+import Alert from "../shared/Alert";
 import axios from "axios";
 
 class AddGroup extends Component {
@@ -15,8 +16,13 @@ class AddGroup extends Component {
         _id: props.user_id
       }],
       currency: '',
-      page: 1
+      page: 1,
+      alert: {
+        message: '',
+        type: ''
+      }
     }
+    this.showAlert = this.showAlert.bind(this)
     this.addGroup = this.addGroup.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.previousPage = this.previousPage.bind(this)
@@ -24,10 +30,21 @@ class AddGroup extends Component {
     this.addMember = this.addMember.bind(this)
     this.deleteMember = this.deleteMember.bind(this)
   }
+  showAlert(message, type){
+    this.setState({
+      alert: { message: message, type: type }
+    })
+    setTimeout(() => this.setState({
+      alert: {
+        message: '',
+        type: ''
+      }
+    }), 1500)
+  }
   addGroup = e => {
     e.preventDefault()
     const { name, currency, members } = this.state
-    const { changeGroup, user_id, showAlert, logOut } = this.props
+    const { changeGroup, user_id, logOut } = this.props
     axios.post('/api/groups/new', 
       { name, currency, members })
     .then(response => {
@@ -38,9 +55,7 @@ class AddGroup extends Component {
           changeGroup(response.data[index].groups.length - 1)
           window.history.back()
         })
-      } else {
-        showAlert(response.data, 'warning');        
-      }
+      } else this.showAlert(response.data, 'warning');        
     })
     .catch(err => logOut())
   }
@@ -86,6 +101,7 @@ class AddGroup extends Component {
       <div className="row h-75">
         <LeftArrow {...this.state} previousPage={this.previousPage} />
         <div className="col-8">
+          <Alert {...this.state} />
           <AddGroupContent {...this.state} handleChange={this.handleChange} 
             addMember={this.addMember} deleteMember={this.deleteMember} addGroup={this.addGroup} />
           <PagePoints {...this.state} />

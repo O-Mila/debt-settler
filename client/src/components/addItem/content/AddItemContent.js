@@ -12,7 +12,7 @@ const AddItemContent = props => {
 		const pageThree = page === 3 ? <PageThree {...props} /> : ''
 		const pageFour = page === 4 ? <PageFour {...props} /> : ''
 		return (
-			<div className="row h-100">
+			<div className="row h-75">
 				{pageOne}
 				{pageTwo}
 				{pageThree}

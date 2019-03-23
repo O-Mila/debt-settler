@@ -2,16 +2,20 @@ import React from 'react';
 
 const PageTwo = props => {
 		const { paid, group, handlePaymentsChange } = props
+		const size = group.members.length < 6 ? 'big' : 'medium'
+		const titleHeight = group.members.length < 6 ? 'h-50' : 'h-25'
 		const payers = (
 			<div className="h-75">
-				<h1 className="h-50 d-flex align-items-center justify-content-center">Who paid?</h1>
-				<div className="h-50 centered">
+				<h1 className={`${titleHeight} d-flex align-items-center justify-content-center`}>
+					Who paid?
+				</h1>
+				<div className="centered">
 				{
 					group.members.map((member, i) => {
 						return  <div key={member.user._id}>
 									<span><h3>{member.user.username}</h3></span>
 									<span>     </span>
-									<span className="ui big right labeled input">
+									<span className={`ui ${size} right labeled input`}>
 										<label for="amount" className="ui teal label">
 											{group.currency}
 										</label>

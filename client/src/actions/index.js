@@ -1,1 +1,1 @@
-export const domain = "https://debt-settler.herokuapp.com"
+export const twoDecimals = amount => Math.round(amount * 100)/100

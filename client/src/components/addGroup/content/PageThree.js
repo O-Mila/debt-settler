@@ -2,7 +2,7 @@ import React from 'react';
 import MemberList from "./MemberList";
 import AddUser from "./AddUser";
 
-const PageTwo = props => {
+const PageThree = props => {
 
 	return (
 	    <div className="alignment h-100 w-100">
@@ -12,4 +12,4 @@ const PageTwo = props => {
 	)
 }
 
-export default PageTwo;
+export default PageThree;

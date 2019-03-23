@@ -17,7 +17,7 @@ const Balance = props => {
   			<div>
 			{
 				sortedMembers.map(member =>
-					<span key={member._id} className={`ui button ${color(member.balance)}`} >
+					<span key={member._id} className={`ui button disabled ${color(member.balance)}`} >
 						{`${member.user.username}: ${member.balance} ${currency}`}
 					</span>
 				)
