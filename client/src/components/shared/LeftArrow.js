@@ -5,7 +5,7 @@ const LeftArrow = props => {
       <i className='huge teal chevron left icon' onClick={props.previousPage}></i>
     )
     return (
-    	<div className="ui column centered arrow-container">
+    	<div className="ui column centered arrow-container h-100">
     		{previousPage}
     	</div>
     )
