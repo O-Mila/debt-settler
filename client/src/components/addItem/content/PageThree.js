@@ -37,7 +37,7 @@ const PageThree = props => {
 									onChange={e => handleConsumptionsBenefitsChange(i,e)} />
 									<label></label>
 								</span>
-								<span className={`ui w-25 ${selected(received.benefits[i])} right labeled input`}>
+								<span className={`ui w-50 ${selected(received.benefits[i])} right labeled input`}>
 									<label for="amount" className="ui blue label">
 										{group.currency}
 									</label>
