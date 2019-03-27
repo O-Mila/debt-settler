@@ -8,7 +8,7 @@ const RightArrow = props => {
       <i className={`huge teal chevron right icon ${hiddenRight}`} onClick={props.nextPage}></i>
     )
     return (
-        <div className="col container arrow-container">{nextPage}</div>
+        <div className="ui column centered arrow-container">{nextPage}</div>
     )
 }
 
