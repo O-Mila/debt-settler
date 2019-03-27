@@ -94,9 +94,7 @@ class AddGroup extends Component {
   }
 
   render() {
-    if(this.state.page === 0){
-      window.history.back()
-    }
+    if(this.state.page === 0) window.history.back()
     return (
       <div className="row h-75">
         <LeftArrow {...this.state} previousPage={this.previousPage} />
