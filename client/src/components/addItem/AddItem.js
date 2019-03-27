@@ -191,7 +191,7 @@ class AddItem extends Component {
 		return (
       	<div className="row h-100">
         	<LeftArrow {...this.state} previousPage={this.previousPage} />
-        	<div className="col-8">
+        	<div className="col-6 col-sm-8">
 	          	<AddItemContent {...this.state} handleNameChange={this.handleNameChange}
 	          		handlePaymentsChange={this.handlePaymentsChange} addItem={this.addItem}
 	          		handleConsumptionsBenefitsChange={this.handleConsumptionsBenefitsChange} 
