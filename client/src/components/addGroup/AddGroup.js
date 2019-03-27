@@ -98,7 +98,7 @@ class AddGroup extends Component {
     return (
       <div className="row h-75">
         <LeftArrow {...this.state} previousPage={this.previousPage} />
-        <div className="col-6 col-md-8">
+        <div className="col-sm-6 col-md-8">
           <Alert {...this.state} />
           <AddGroupContent {...this.state} handleChange={this.handleChange} 
             addMember={this.addMember} deleteMember={this.deleteMember} addGroup={this.addGroup} />
