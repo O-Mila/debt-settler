@@ -96,7 +96,7 @@ class AddGroup extends Component {
   render() {
     if(this.state.page === 0) window.history.back()
     return (
-      <div className="ui equal width grid h-100">
+      <div className="ui equal width grid h-75">
         <LeftArrow {...this.state} previousPage={this.previousPage} />     
         <div className="eight wide column">
           <Alert {...this.state} />
