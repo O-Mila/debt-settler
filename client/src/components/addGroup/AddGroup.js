@@ -96,17 +96,15 @@ class AddGroup extends Component {
   render() {
     if(this.state.page === 0) window.history.back()
     return (
-      <div className="ui equal width grid">
-   
-          <LeftArrow {...this.state} previousPage={this.previousPage} />
-     
+      <div className="ui equal width grid h-100">
+        <LeftArrow {...this.state} previousPage={this.previousPage} />     
         <div className="eight wide column">
-            <Alert {...this.state} />
-            <AddGroupContent {...this.state} handleChange={this.handleChange} 
-              addMember={this.addMember} deleteMember={this.deleteMember} addGroup={this.addGroup} />
-            <PagePoints {...this.state} />
-        </div>
-          <RightArrow {...this.state} nextPage={this.nextPage} />
+          <Alert {...this.state} />
+          <AddGroupContent {...this.state} handleChange={this.handleChange} 
+            addMember={this.addMember} deleteMember={this.deleteMember} addGroup={this.addGroup} />
+          <PagePoints {...this.state} />
+      </div>
+        <RightArrow {...this.state} nextPage={this.nextPage} />
       </div>
     )
   }
