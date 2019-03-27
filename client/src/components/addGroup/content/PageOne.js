@@ -2,9 +2,9 @@ import React from 'react';
 
 const PageOne = props => {
 	return (
-	    <div className="ui massive input alignment">
+	    <div className="col-xs-2 col-sm-6 alignment centered">
 	        <input type='text' placeholder="Group name..." value={props.name} name="name"
-	              onChange={props.handleChange}  />
+	            onChange={props.handleChange}  />
 	    </div>
 	)
 }
