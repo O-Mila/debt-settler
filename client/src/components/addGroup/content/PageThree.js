@@ -6,7 +6,7 @@ const PageThree = props => {
 
 	return (
 	    <div className="alignment h-100 w-100">
-	        <div className="h-50"><MemberList {...props} /></div>
+	        <div><MemberList {...props} /></div>
 	       	<AddUser {...props} />
 	    </div>
 	)

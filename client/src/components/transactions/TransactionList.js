@@ -54,13 +54,13 @@ class TransactionList extends Component {
     const transactions = group.items ? <TransactionsContent {...this.state} /> : ''
 
     return (
-      <div className="row h-75">
+      <div className="ui equal width grid h-75">
         <LeftArrow {...this.state} previousPage={this.previousPage} />
-        <div className="col-8">
-          <div>
-            <h1 className="centered h-25">
+        <div className="eight wide column">
+          <div className="centered">
+            <h3 className="centered">
               {`Transactions (${(page-1)*10 + 1} - ${Math.min(page * 10, transLength)})`}
-            </h1>
+            </h3>
             {transactions}
             <div className="ui teal fluid button" onClick={() => window.history.back()}>
                 Go back

@@ -6,13 +6,14 @@ import PageFour from "./PageFour";
 
 const AddItemContent = props => {
 
-		const { page } = props
+		const { page, paid } = props
+		const manyMembers = paid.length < 5 || page === 1 ? 'h-100' : ''
 		const pageOne = page === 1 ? <PageOne {...props} /> : ''
 		const pageTwo = page === 2 ? <PageTwo {...props} /> : ''
 		const pageThree = page === 3 ? <PageThree {...props} /> : ''
 		const pageFour = page === 4 ? <PageFour {...props} /> : ''
 		return (
-			<div className="row h-75">
+			<div className={`row ${manyMembers}`}>
 				{pageOne}
 				{pageTwo}
 				{pageThree}

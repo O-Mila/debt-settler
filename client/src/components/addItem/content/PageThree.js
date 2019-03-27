@@ -19,8 +19,8 @@ const PageThree = props => {
     	</div>
     ) : ''
 	const consumers = (
-		<div className="h-75">
-			<h1 className={`${titleHeight} d-flex align-items-center justify-content-center`}>
+		<div>
+			<h1 className={`d-flex align-items-center justify-content-center`}>
 				For whom?
 			</h1>
 			{notExact}
@@ -28,16 +28,16 @@ const PageThree = props => {
 			{
 				group.members.map((member, i) => {
 					return  <div key={member.user._id}>
-								<span className={`ui ${size} ${selected(received.benefits[i])} button`}>
+								<span className={`ui small ${selected(received.benefits[i])} button`}>
 									{member.user.username}
 								</span>
-								<span className={`ui toggle ${size} checkbox`}>
+								<span className={`ui tiny toggle checkbox`}>
 									<input type='checkbox' name='received' 
 									checked={received.benefits[i]}
 									onChange={e => handleConsumptionsBenefitsChange(i,e)} />
 									<label></label>
 								</span>
-								<span className={`ui ${size} ${selected(received.benefits[i])} right labeled input`}>
+								<span className={`ui w-25 ${selected(received.benefits[i])} right labeled input`}>
 									<label for="amount" className="ui blue label">
 										{group.currency}
 									</label>
@@ -54,7 +54,7 @@ const PageThree = props => {
 	)
 
 	return (
-	    <div className="alignment h-100 w-100">
+	    <div className="alignment w-100">
 	        {consumers}
 	    </div>
 	)

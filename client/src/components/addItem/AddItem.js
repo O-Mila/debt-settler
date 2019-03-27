@@ -189,9 +189,9 @@ class AddItem extends Component {
 	render(){
 		if(this.state.page === 0) window.history.back()
 		return (
-      	<div className="row h-100">
+      	<div className="ui equal width grid h-75">
         	<LeftArrow {...this.state} previousPage={this.previousPage} />
-        	<div className="col-6 col-sm-8">
+        	<div className="eight wide column">
 	          	<AddItemContent {...this.state} handleNameChange={this.handleNameChange}
 	          		handlePaymentsChange={this.handlePaymentsChange} addItem={this.addItem}
 	          		handleConsumptionsBenefitsChange={this.handleConsumptionsBenefitsChange} 
