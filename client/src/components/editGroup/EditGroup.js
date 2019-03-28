@@ -5,6 +5,7 @@ import MemberList from "./MemberList";
 import AddUser from "./AddUser";
 import Alert from "../shared/Alert";
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 class EditGroup extends Component {
   	constructor(props){
@@ -18,7 +19,8 @@ class EditGroup extends Component {
         alert: {
           message: '',
           type: ''
-        }
+        },
+        redirectDeleted: false
 		  }
     	this.editGroup = this.editGroup.bind(this)
     	this.handleChange = this.handleChange.bind(this)
@@ -98,15 +100,30 @@ class EditGroup extends Component {
 		axios.put(`/api/groups/${group_id}`, 
       { oldMembers, newMembers, deletedMembers, name })
     .then(response => {
-      console.log(response)
       if(response.data.name) window.history.back()
       else this.showAlert(response.data, 'warning')
     })
 	}
+  deleteGroup = () => {
+    const { changeGroup, showAlert } = this.props
+    axios.delete(`/api/groups/${this.state.group._id}`)
+    .then(res => {
+      this.setState({ redirectDeleted: true })
+      changeGroup(0)
+      showAlert(res.data, 'success')
+    })
+  }
 	render(){
-    const { oldMembers, newMembers, deletedMembers } = this.state
-		const oldUsers = oldMembers ? oldMembers.map(member => member.user) : ''
+    const { oldMembers, newMembers, deletedMembers, redirectDeleted, group } = this.state
+		if(redirectDeleted) {
+      return <Redirect to='/groups' />
+    }
+    const oldUsers = oldMembers ? oldMembers.map(member => member.user) : ''
     const deletedUsers = deletedMembers ? deletedMembers.map(member => member.user) : ''
+    const debts = group.members ? group.members.some(member => member.debts.length) : ''
+    const deleteButton = debts ? '' : (
+      <div onClick={this.deleteGroup} className="ui red button">Delete group</div>
+    )
 		return (
 			<div className="container h-75">
         <Alert {...this.state} />
@@ -121,10 +138,11 @@ class EditGroup extends Component {
           <Link to="/groups">
             <div className="ui teal button">Go back</div>
           </Link>
+          {deleteButton}
         </form>
 			</div>
 		)
 	}
 }
 
-export default EditGroup
+export default EditGroup;

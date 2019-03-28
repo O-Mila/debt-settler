@@ -3,8 +3,6 @@ import { twoDecimals } from "../../../actions/index"
 
 const PageThree = props => {
 	const { group, total, received, handleConsumptionsAmountsChange, handleConsumptionsBenefitsChange } = props
-	const size = group.members.length < 6 ? 'big' : 'medium'
-	const titleHeight = group.members.length < 6 ? 'h-50' : 'h-25'
 	const selected = active => {
 		if(active) return 'blue'
 		return 'disabled'

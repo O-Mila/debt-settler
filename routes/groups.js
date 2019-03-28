@@ -72,6 +72,13 @@ router.put("/:group_id", (req, res) => {
 	})
 })
 
+// Delete group
+router.delete("/:group_id", (req, res) => {
+	Group.findOneAndDelete({_id: req.params.group_id})
+	.then(() => res.json("Group successfully deleted"))
+	.catch(err => res.json(err))
+});
+
 // Update group debts
 router.put("/:group_id/debts", (req, res) => {
 	findGroup(req.params.group_id).then(group => {
