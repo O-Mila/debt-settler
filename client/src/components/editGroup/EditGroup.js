@@ -5,7 +5,6 @@ import MemberList from "./MemberList";
 import AddUser from "./AddUser";
 import Alert from "../shared/Alert";
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
 
 class EditGroup extends Component {
   	constructor(props){
@@ -19,8 +18,7 @@ class EditGroup extends Component {
         alert: {
           message: '',
           type: ''
-        },
-        redirectDeleted: false
+        }
 		  }
     	this.editGroup = this.editGroup.bind(this)
     	this.handleChange = this.handleChange.bind(this)
@@ -108,16 +106,14 @@ class EditGroup extends Component {
     const { changeGroup, showAlert } = this.props
     axios.delete(`/api/groups/${this.state.group._id}`)
     .then(res => {
-      this.setState({ redirectDeleted: true })
+      window.history.back()
       changeGroup(0)
       showAlert(res.data, 'success')
     })
+    .catch(err => window.history.back())
   }
 	render(){
-    const { oldMembers, newMembers, deletedMembers, redirectDeleted, group } = this.state
-		if(redirectDeleted) {
-      return <Redirect to='/groups' />
-    }
+    const { oldMembers, newMembers, deletedMembers, group } = this.state
     const oldUsers = oldMembers ? oldMembers.map(member => member.user) : ''
     const deletedUsers = deletedMembers ? deletedMembers.map(member => member.user) : ''
     const debts = group.members ? group.members.some(member => member.debts.length) : ''

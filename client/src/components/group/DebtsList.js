@@ -41,8 +41,8 @@ class DebtsList extends Component {
 		const { members, currency } = this.props.group
 		const indebtedUsers = members.filter(member => member.debts.length)
 			.sort((a, b) => 
-			Math.max(a.debts.map(debt => debt.amount)) 
-			< Math.max(b.debts.map(debt => debt.amount)) 
+			Math.max(a.debts.map(debt => debt.amount))
+			< Math.max(b.debts.map(debt => debt.amount))
 			? 1 : -1)
 		const indebted = indebtedUsers.length ? (
 			<div>

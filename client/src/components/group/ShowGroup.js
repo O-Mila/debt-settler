@@ -31,7 +31,7 @@ class ShowGroup extends Component {
     	}
   	}
 	transferMade(){
-		this.componentDidMount()
+		setTimeout(() => this.componentDidMount(), 100)		
 	}
 	render(){
 		const { group } = this.state;
