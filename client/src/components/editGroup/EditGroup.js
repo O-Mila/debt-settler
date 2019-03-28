@@ -117,7 +117,7 @@ class EditGroup extends Component {
             deleteNewMember={this.deleteNewMember} />
     			<AddUser {...this.state} addMember={this.addNewMember}
             members={[...oldUsers, ...deletedUsers, ...newMembers]} />
-          <div className="ui yellow button" onClick={this.editGroup}>Edit Group</div>
+          <div className="ui yellow button" onClick={this.editGroup}>Accept</div>
           <Link to="/groups">
             <div className="ui teal button">Go back</div>
           </Link>
