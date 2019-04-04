@@ -12,7 +12,6 @@ const GroupList = props => {
 	const groupList = groups.length ? (
       <div>
           {divider}
-          <div className="row justify-content-around">
           {
             groups.map((group, i) => {
               return  <div onClick={() => changeGroup(i)} key={group._id}
@@ -21,8 +20,7 @@ const GroupList = props => {
                       </div>
             })
           }
-          <Link to="/groups/new"><span><i className="plus big teal circle icon"></i></span></Link>
-          </div>        
+          <Link to="/groups/new"><span><i className="plus big teal circle icon"></i></span></Link>     
       </div>
     ) : <Link to="/groups/new" className="ui massive fluid teal button">
           <div>Create new group</div>
