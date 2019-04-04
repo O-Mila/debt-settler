@@ -46,7 +46,7 @@ class AddUser extends Component {
     const isLoading = loading ? 'loading' : ''
 
     return (
-          <div className={`ui fluid category ${isLoading} search w-100 h-25 centered`} >
+          <div className={`ui fluid category ${isLoading} search w-100 h-25 centered mt-3 mb-1`} >
             <div className="ui icon input w-100 centered">
               <input className="ui huge input prompt" type='text' onChange={this.searchUser} 
                 placeholder="Add user..." name='search' ref='search' />

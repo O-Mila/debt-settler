@@ -3,15 +3,14 @@ import React from 'react';
 const MemberList = props => {
     
     const { members, deleteMember } = props;
-    const fluid = members.length > 3 ? '' : 'fluid';
-    const memberClass = `ui big ${fluid} teal basic button members`;
 
     return (
-	    <div className='members'>
+	    <div className='row justify-content-around mt-5 mb-5'>
 		{
 		    members.map(member => {
-			    return  <div key={member._id} className={memberClass}
-			                onClick={deleteMember}>
+			    return  <div key={member._id} 
+			    		className='ui big teal basic button mr-1 ml-1 mt-1 mb-1'
+			            onClick={deleteMember}>
 			                    {member.username}
 			            </div>
 			    })

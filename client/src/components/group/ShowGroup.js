@@ -41,15 +41,15 @@ class ShowGroup extends Component {
 		const transactionList = group._id ? <TransactionList {...this.state} /> : ''
 		return (
 			<div>
-				<h1 className="d-flex align-items-center justify-content-center h-25">
-					{group.name}
+				<h1 className="mt-3 mb-3 d-flex align-items-center justify-content-center">
+					<div className="mr-3 ml-3">{group.name}</div>
 					<Link to={`groups/${group._id}/edit`} className="ui yellow button more-margin">
 						Edit Group
 					</Link>
 				</h1>
-				<div>{balance}</div>
-				<div>{debtsList}</div>
-				<div>{transactionList}</div>
+				<div className="mt-3 mb-3">{balance}</div>
+				<div className="mt-3 mb-3">{debtsList}</div>
+				<div className="mt-3 mb-3">{transactionList}</div>
 			</div>
 		)
 	}

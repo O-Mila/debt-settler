@@ -14,11 +14,12 @@ const Balance = props => {
 				<i className="balance scale icon"></i>
 				<div className="section-title">Balances</div>
 			</div>
-  			<div>
+  			<div className="row justify-content-around">
 			{
 				sortedMembers.map(member =>
-					<span key={member._id} className={`ui button disabled ${color(member.balance)}`} >
-						{`${member.user.username}: ${member.balance} ${currency}`}
+					<span key={member._id} 
+						className={`ui button disabled ${color(member.balance)} mb-1`} >
+							{`${member.user.username}: ${member.balance} ${currency}`}
 					</span>
 				)
 			}

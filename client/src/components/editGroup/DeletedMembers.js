@@ -4,7 +4,7 @@ const DeletedMembers = props => {
     
     const { deletedMembers, addOldMember } = props;
     const size = deletedMembers.length > 8 ? 'medium' : 'big';
-    const memberClass = `ui ${size} orange fluid button members`;
+    const memberClass = `ui ${size} orange fluid button mt-1 mb-1`;
     const header = deletedMembers.length ? (
     	<div className="ui horizontal divider">
     		Deleted members
@@ -14,7 +14,7 @@ const DeletedMembers = props => {
     return (
     	<div>
     		{header}
-		    <div className="members h-25">
+		    <div className="mb-3">
 			{
 			    deletedMembers.map(member => {
 				    return  <div key={member.user._id} className={memberClass}

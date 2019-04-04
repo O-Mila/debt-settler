@@ -118,7 +118,7 @@ class EditGroup extends Component {
     const deletedUsers = deletedMembers ? deletedMembers.map(member => member.user) : ''
     const debts = group.members ? group.members.some(member => member.debts.length) : ''
     const deleteButton = debts ? '' : (
-      <div onClick={this.deleteGroup} className="ui red button">Delete group</div>
+      <div onClick={this.deleteGroup} className="ui red button mr-1 ml-1">Delete group</div>
     )
 		return (
 			<div className="container h-75">
@@ -130,11 +130,13 @@ class EditGroup extends Component {
             deleteNewMember={this.deleteNewMember} />
     			<AddUser {...this.state} addMember={this.addNewMember}
             members={[...oldUsers, ...deletedUsers, ...newMembers]} />
-          <div className="ui yellow button" onClick={this.editGroup}>Accept</div>
-          <Link to="/groups">
-            <div className="ui teal button">Go back</div>
-          </Link>
-          {deleteButton}
+          <div className="mt-2">
+            <div className="ui yellow button mr-1 ml-1" onClick={this.editGroup}>Accept</div>
+            <Link to="/groups">
+              <div className="ui teal button mr-1 ml-1">Go back</div>
+            </Link>
+            {deleteButton}
+          </div>
         </form>
 			</div>
 		)

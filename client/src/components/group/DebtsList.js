@@ -45,7 +45,7 @@ class DebtsList extends Component {
 			< Math.max(b.debts.map(debt => debt.amount))
 			? 1 : -1)
 		const indebted = indebtedUsers.length ? (
-			<div>
+			<div className="row justify-content-around">
 			{
 				indebtedUsers.map((member, i) =>
 					<span key={member._id}>
@@ -61,7 +61,7 @@ class DebtsList extends Component {
 									{`${currency} to ${debt.receiver.username}`}
 								</span>
 								<span>   </span>
-								<span className="mini green ui button" onClick={e => 
+								<span className="mini green ui button mb-1" onClick={e => 
 								this.handleSubmit(e, member.user._id, debt.receiver._id)}>
 									Transfer
 								</span>
@@ -71,7 +71,7 @@ class DebtsList extends Component {
 							: 
 
 							(
-							<span key={debt._id} className="ui teal button"
+							<span key={debt._id} className="ui teal button mb-1"
 								onClick={() => this.handlePayment(i, j, debt.amount)} >
 								{`${member.user.username} owes ${debt.amount} ${currency} 
 								to ${debt.receiver.username}`}

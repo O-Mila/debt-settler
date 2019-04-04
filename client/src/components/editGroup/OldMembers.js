@@ -12,12 +12,13 @@ const OldMembers = props => {
     		<div className="ui horizontal divider">
     			Current members
     		</div>
-		    <div className="members h-25">
+		    <div className="mb-3">
 			{
 			    oldMembers.map(member => {
 				    return  <div key={member.user._id} onClick={deleteOldMember}
-				    			className={`ui ${size} ${active(member.balance)} button members`}>
-				                    {member.user.username}
+				    		className={`ui ${size} ${active(member.balance)} 
+				    		button mt-1 mb-1`}>
+				                {member.user.username}
 				            </div>
 				    })
 			}
