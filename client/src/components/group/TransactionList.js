@@ -13,7 +13,7 @@ class TransactionList extends Component {
           <i className="coffee icon"></i>
           <div className="section-title">Latest transactions</div>
         </div>
-          <div className="ui vertical segment">         
+          <div className="ui vertical segment row justify-content-center">         
             <TransactionsContent {...this.state} group={group} />
           </div>
       </div>

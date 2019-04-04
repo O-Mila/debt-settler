@@ -45,7 +45,7 @@ class DebtsList extends Component {
 			< Math.max(b.debts.map(debt => debt.amount))
 			? 1 : -1)
 		const indebted = indebtedUsers.length ? (
-			<div className="row justify-content-around">
+			<div className="row justify-content-center">
 			{
 				indebtedUsers.map((member, i) =>
 					<span key={member._id}>
