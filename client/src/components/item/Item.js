@@ -54,7 +54,7 @@ class Item extends Component {
 						{paymentList}
 					</table>
 				</div>
-				<div className="ui teal button d-flex align-items-center justify-content-center" 
+				<div className="ui teal button d-flex align-items-center justify-content-center mb-5" 
 					onClick={() => window.history.back()}>
 						Go back
 				</div>
