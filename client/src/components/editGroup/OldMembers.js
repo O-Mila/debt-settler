@@ -12,7 +12,7 @@ const OldMembers = props => {
     		<div className="ui horizontal divider">
     			Current members
     		</div>
-		    <div className="mb-3">
+		    <div className="row justify-content-around mb-3">
 			{
 			    oldMembers.map(member => {
 				    return  <div key={member.user._id} onClick={deleteOldMember}
