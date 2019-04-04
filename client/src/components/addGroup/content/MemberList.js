@@ -5,7 +5,7 @@ const MemberList = props => {
     const { members, deleteMember } = props;
 
     return (
-	    <div className='row justify-content-around mt-5 mb-5'>
+	    <div className='row justify-content-center mt-5 mb-5'>
 		{
 		    members.map(member => {
 			    return  <div key={member._id} 
